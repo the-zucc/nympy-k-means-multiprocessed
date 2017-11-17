@@ -16,11 +16,12 @@ class Centroide():
     
 #CLASSE POINT ===================================================================================
 class Point():
-    def __init__(self,x,y,motx,moty):
+    def __init__(self,x,y,motx,moty,poids):
         self.x = x
         self.y = y 
         self.motx = motx
         self.moty = moty
+        self.poids = poids
             
 #CLASSE CLUSTER =================================================================================
 class Cluster():

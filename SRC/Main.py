@@ -8,7 +8,7 @@
 #Imports =======================================================================================
 import sys
 from pip._vendor.distlib.compat import raw_input
-from SQLConnector import SQLConnector
+
 import time
 
 #Methode Main =================================================================================
