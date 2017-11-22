@@ -1,8 +1,10 @@
-'''
-Created on 17 nov. 2017
+#-*- coding: utf8 -*-
+#===============================================================================================
+# Fichier : Main.py
+# Projet  : B52_TP3
+# Auteurs : Kevin Mwanangwa, Laurier Lavoie-Giasson, Chris David
+#===============================================================================================
 
-@author: Laurier Lavoie-Giasson
-'''
 from Points import *
 import random
 import numpy as np
@@ -16,7 +18,7 @@ class Calculator():
         self.points=[]
         self.centroides=[]
         self.clusters=[]
-        #génération des données pour le test                                                       o
+        #gï¿½nï¿½ration des donnï¿½es pour le test                                                       o
         for i in range(nombrepointstest):
             vecteur=np.array()
             
