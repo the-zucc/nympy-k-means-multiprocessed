@@ -9,6 +9,7 @@
 import sys
 import cx_Oracle
 import time
+import csv
 
 #Class SQLConnector ============================================================================
 class SQLConnector():
@@ -23,6 +24,7 @@ class SQLConnector():
         self.connexion = cx_Oracle.connect(chaineConnexion)
         self.cur = self.connexion.cursor()
         endConn = time.time() - startConn
+        self.fenetre = 7
         print("     /TIMER/  Connection avec la BD : ",endConn, "secondes")        
                
         #DICTIONNAIRE ---------------------------------------------------------------------------
@@ -36,6 +38,7 @@ class SQLConnector():
         
         #COOCCURRENCES --------------------------------------------------------------------------
         self.coocs = {}  
+        self.nbcoocs = {}
         print("   /PROGRAM/  Remplir cooccurrences internes")
         startCoocs = time.time()
         self.get_coocs()  
@@ -61,4 +64,23 @@ class SQLConnector():
             idx = int(ligne[0])
             nbc = int(ligne[4])
             self.coocs[(idmot1,idmot2)] = idx
-            self.nbcoocs[idx] = nbc        
+            self.nbcoocs[idx] = nbc
+            
+    def csvEcriture(self):
+        f = open('donnees.csv','w')
+        w = csv.writer(f)
+        for ((id_mot1,id_mot2),idx) in self.coocs.items():
+            score = self.nbcoocs[idx]            
+            w.writerow([id_mot1, id_mot2, score])   
+        f.close()
+        print("finit!!!!!!!!")
+        
+    def csvLecture(self, matrice):
+        lectureFichier = csv.reader(open("donnees.csv","r"))
+        for row in lectureFichier:
+            idmot1 = int(row[0])
+            idmot2 = int(row[1])
+            nbcoocs = int(row[2])
+            matrice[idmot1][idmot2] = nbcoocs
+        
+        
