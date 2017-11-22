@@ -19,6 +19,9 @@ class Centroide():
         self.vectPosition=vectPosition
         self.id=IdMaker.nextval()
     
+    def changerPosition(self, vectNouvellePosition):
+        self.anciennePosition=self.vectPosition
+        self.vectPosition=vectNouvellePosition
 #CLASSE POINT ===================================================================================
 class Point():
     def __init__(self,vectPosition,poids):

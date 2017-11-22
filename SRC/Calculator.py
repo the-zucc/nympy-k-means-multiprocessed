@@ -39,22 +39,22 @@ class Calculator():
     def attribuerLesClusters(self,points):
         for point in points:
             distance=self.attribuerCluster(point)
-            print ("cluster choisi:",point.cluster.centroide.id," distance:",distance)
+            #print ("cluster choisi:",point.cluster.centroide.id," distance:",distance)
     
-    def attribuerCluster(self, point):
+    def attribuerCluster(self, point):#la fonction attribue à chaque point le cluster/centroide qui lui convient.
         centroideProche=None
         distanceCentroideProche=None
         for centroide in self.centroides:
             if(centroideProche is None):
                 centroideProche=centroide
                 distanceCentroideProche=self.calculerDistance(point.vectPosition, centroide.vectPosition)
-                print("distance centroide 1:",distanceCentroideProche)
+                #print("distance centroide 1:",distanceCentroideProche)
             else:
                 distanceCentroide=self.calculerDistance(point.vectPosition, centroide.vectPosition)
                 if(distanceCentroide < distanceCentroideProche):
                     centroideProche=centroide
                     distanceCentroideProche=distanceCentroide
-                print("distance centroide",centroide.id,":",distanceCentroide)
+                #print("distance centroide",centroide.id,":",distanceCentroide)
         nouveauCluster = self.clusters[centroideProche.id]
         if point.cluster is None:
             point.cluster=nouveauCluster
@@ -67,9 +67,23 @@ class Calculator():
                 #ajouter le point dans son nouveau cluster
                 nouveauCluster.points.append(point)
         return distanceCentroideProche
+    
     def calculerDistance(self, vect1, vect2):
         return np.sum(np.square(vect1-vect2))
-
+    
+    def calculerPositionCentroide(self, cluster):
+        vecteurs=np.array([point.vectPosition for point in cluster.points])
+        cluster.centroide.changerPosition(np.mean(vecteurs,axis=0))
+        
+    def calculerPositionsCentroides(self, clusters):
+        for cluster in clusters:
+            self.calculerPositionCentroide(cluster)
+            print("ancienne position centroide: ", cluster.centroide.anciennePosition)
+            print("nouvelle position centroide: ", cluster.centroide.vectPosition)
+    
+    def sequenceCalcul(self, points, clusters):
+        self.attribuerLesClusters(points)
+        self.calculerPositionsCentroides(clusters.values())
 if __name__ == '__main__':
     calculator=Calculator()
-    calculator.attribuerLesClusters(calculator.points)
+    calculator.sequenceCalcul(calculator.points, calculator.clusters)
