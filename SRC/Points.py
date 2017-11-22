@@ -1,6 +1,6 @@
 #-*- coding: utf8 -*-
 #===============================================================================================
-# Fichier : Calculator.py
+# Fichier : Points.py
 # Projet  : B52_TP3
 # Auteurs : Kevin Mwanangwa, Laurier Lavoie-Giasson, Chris David
 #===============================================================================================
@@ -9,21 +9,33 @@
 import numpy as np
 
 #CLASSE CENTROIDE ==============================================================================
+class IdMaker():
+    currval=0
+    def nextval():
+        IdMaker.currval+=1
+        return IdMaker.currval
 class Centroide():
-    def __init__(self,x,y):
-        self.x = x
-        self.y = y
+    def __init__(self,vectPosition):
+        self.vectPosition=vectPosition
+        self.id=IdMaker.nextval()
     
+    def changerPosition(self, vectNouvellePosition):
+        self.anciennePosition=self.vectPosition
+        self.vectPosition=vectNouvellePosition
 #CLASSE POINT ===================================================================================
 class Point():
-    def __init__(self,vect,poids):
-        self.vect = vect
+    def __init__(self,vectPosition,poids):
+        self.vectPosition = vectPosition
         self.poids = poids
-    def __init__(self,nombre):
-        
+        self.cluster = None
             
 #CLASSE CLUSTER =================================================================================
 class Cluster():
-    def __init__(self):
-        self.points = [] #Objets points
-        self.centroide = None #Objet centroide
+    def __init__(self, centroide=None):
+        self.centroide=centroide
+        self.points=[];
+        #self.idCluster=centroide.id
+
+if __name__ == '__main__':
+    for i in range(100):
+        print(IdMaker.nextval())
