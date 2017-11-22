@@ -1,37 +1,45 @@
-'''
-Created on 17 nov. 2017
-
-@author: Laurier Lavoie-Giasson
-'''
+#-*- coding: utf8 -*-
+#===============================================================================================
+# Fichier : Calculator.py
+# Projet  : B52_TP3
+# Auteurs : Kevin Mwanangwa, Laurier Lavoie-Giasson, Chris David
+#===============================================================================================
 from Points import *
 import random
 import numpy as np
 
-largeurtest=300
+largeurtest=3000
 hauteurtest=200
-nombrepointstest=300
+nombrepointstest=20000
+nombrecentroidestest=50
 
 class Calculator():
     def __init__(self):
         self.points=[]
         self.centroides=[]
-        self.clusters=[]
-        #génération des données pour le test                                                       o
+        self.clusters={}
+        #gÃ©nÃ©ration des donnÃ©es pour le test                                                       o
         for i in range(nombrepointstest):
-            vecteur=np.array()
+            position=self.genererPosition()
+            self.points.append(Point(position, 1))
             
-            x=random.randrange(largeurtest)
-            y=random.randrange(hauteurtest)
-            
-            self.points.append(Point(x,y, random.randrange(20)))
-        for i in range(20):
-            x=random.randrange(largeurtest)
-            y=random.randrange(hauteurtest)
-            self.centroides
+        for i in range(nombrecentroidestest):
+            position=self.genererPosition()
+            centroide=Centroide(position)
+            self.centroides.append(centroide)
+            print(centroide.id)
+            self.clusters[centroide.id]=Cluster(centroide)
+    
+    def genererPosition(self):
+        position=np.zeros(10)
+        for i in range(len(position)):
+            position[i]=random.randrange(largeurtest)
+        return position
     
     def attribuerLesClusters(self,points):
         for point in points:
-            self.attribuerCluster(point)
+            distance=self.attribuerCluster(point)
+            print ("cluster choisi:",point.cluster.centroide.id," distance:",distance)
     
     def attribuerCluster(self, point):
         centroideProche=None
@@ -39,12 +47,29 @@ class Calculator():
         for centroide in self.centroides:
             if(centroideProche is None):
                 centroideProche=centroide
-                distanceCentroideProche=self.calculerDistance(point.x, point.y, centroide.x, centroide.y)
+                distanceCentroideProche=self.calculerDistance(point.vectPosition, centroide.vectPosition)
+                print("distance centroide 1:",distanceCentroideProche)
             else:
-                distanceCentroide=self.calculerDistance(point.x, point.y, centroide.x, centroide.y)
+                distanceCentroide=self.calculerDistance(point.vectPosition, centroide.vectPosition)
                 if(distanceCentroide < distanceCentroideProche):
                     centroideProche=centroide
                     distanceCentroideProche=distanceCentroide
-            #attribuer le cluster a partir du centroide
+                print("distance centroide",centroide.id,":",distanceCentroide)
+        nouveauCluster = self.clusters[centroideProche.id]
+        if point.cluster is None:
+            point.cluster=nouveauCluster
+            nouveauCluster.points.append(point)
+        else:
+            ancienCluster=point.cluster
+            if ancienCluster != nouveauCluster:
+                #enlever le point de son ancien cluster
+                ancienCluster.points.remove(point)
+                #ajouter le point dans son nouveau cluster
+                nouveauCluster.points.append(point)
+        return distanceCentroideProche
     def calculerDistance(self, vect1, vect2):
-        return np.sum(np.square(vect1), np.square(vect2))
+        return np.sum(np.square(vect1-vect2))
+
+if __name__ == '__main__':
+    calculator=Calculator()
+    calculator.attribuerLesClusters(calculator.points)
