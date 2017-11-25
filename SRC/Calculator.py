@@ -15,8 +15,8 @@ from test.regrtest import multiprocessing
 nbThreads=4
 largeurtest=3000
 hauteurtest=200
-nombrepointstest=25000
-nombrecentroidestest=10
+nombrepointstest=455000
+nombrecentroidestest=80
 
 class Calculator():
     def __init__(self):
@@ -47,7 +47,7 @@ class Calculator():
             distance=self.attribuerCluster(points[i])
             #print ("cluster choisi:",point.cluster.centroide.id," distance:",distance)
     
-    def attribuerCluster(self, point):#la fonction attribue à chaque point le cluster/centroide qui lui convient.
+    def attribuerCluster(self, point, multithread=False):#la fonction attribue à chaque point le cluster/centroide qui lui convient.
         centroideProche=None
         distanceCentroideProche=None
         for centroide in self.centroides:
@@ -69,11 +69,11 @@ class Calculator():
             ancienCluster=point.cluster
             if ancienCluster != nouveauCluster:
                 #enlever le point de son ancien cluster
-                ancienCluster.points.remove(point)
+                #ancienCluster.points.remove(point)
                 #ajouter le point dans son nouveau cluster
-                nouveauCluster.points.append(point)
+                #nouveauCluster.points.append(point)
                 point.cluster=nouveauCluster
-        return distanceCentroideProche
+        return
     
     def calculerDistance(self, vect1, vect2):
         return np.sum(np.square(vect1-vect2))
@@ -85,13 +85,20 @@ class Calculator():
     def calculerPositionsCentroides(self, clusters):
         for cluster in clusters:
             self.calculerPositionCentroide(cluster)
-            print(cluster.centroide.vectPosition)
+            #print(cluster.centroide.vectPosition)
     
     def sequenceCalcul(self, points, clusters):
         self.attribuerLesClusters(points, 0, len(self.points)-1)
+        self.creerClustersAPartirDesPoints(self.points, self.clusters)
         self.calculerPositionsCentroides(clusters.values())
+    
+    def creerClustersAPartirDesPoints(self, listepoints, listeclusters):
+        for cluster in listeclusters:
+            cluster.points=[]
+        for point in listepoints:
+            if point.cluster is not None:
+                point.cluster.points.append(point)
         
-
 class CalculatorThread(multiprocessing.Process):
     def __init__(self, calculator,indexThread, nombreTotalThreads):
         multiprocessing.Process.__init__(self,name=("threadCalculatrice-"+str(indexThread)))
@@ -125,15 +132,16 @@ class EnsembleThreads():
             mythread.run()
         for mythread in self.threads:
             mythread.join()
-            
+        self.calculator.creerClustersAPartirDesPoints(self.calculator.points, self.calculator.clusters.values())
+        self.calculator.calculerPositionsCentroides(self.calculator.clusters.values())
 if __name__ == '__main__':
     calculator=Calculator()
     i=0
-    #threads=EnsembleThreads(calculator, nbThreads)
-    #threads.initierThreadsEtCalculerUneFois()
-    #calculator.calculerPositionsCentroides(calculator.clusters.values())
+    threads=EnsembleThreads(calculator, nbThreads)
+    threads.initierThreadsEtCalculerUneFois()
+    calculator.calculerPositionsCentroides(calculator.clusters.values())
     while True:
-        #threads.calculer()
+        threads.calculer()
         i+=1
-        calculator.sequenceCalcul(calculator.points, calculator.clusters)
+        #calculator.sequenceCalcul(calculator.points, calculator.clusters)
         print("calculé",i)
