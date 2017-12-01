@@ -34,8 +34,14 @@ class Calculator():
         self.nbMots = len(Database.dictionnaire)
         self.matrice = np.zeros( (self.nbMots,self.nbMots) )   
         self.Database.csvLecture(self.matrice,Params[1]) #Remplir matrice avec taille de fenetre  
-        print(self.matrice)   
+        print(self.matrice)  
         
+        #TEMPORAIRE ############################# 
+        for vecteur in self.matrice:
+            ptTmp = Point(vecteur,0)
+            self.points.append(ptTmp)
+        #########################################   
+            
         #Loader la stop-list ----------------------------------------------------------------------------
         self.chargerStopList()
         
@@ -47,6 +53,8 @@ class Calculator():
         else: 
             self.mode = 2
             self.genererCentroidesAleatoires(Params[2])   
+            
+        self.test()
     
     #REMPLIR LA STOP-LIST ====================================================================================================
     def chargerStopList(self):
@@ -79,39 +87,36 @@ class Calculator():
             #Creer le centroide avec le mot dans la matrice --------------------------------------------------
             CentroTmp = Centroide(self.matrice[index])
             self.centroides.append(CentroTmp)
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+            self.clusters[CentroTmp.id] = Cluster(CentroTmp)
+            
+            
+            
+            
+            
+            
+    def test(self):
+        i=0
+        #threads=EnsembleThreads(calculator, nbThreads)
+        #threads.initierThreadsEtCalculerUneFois()
+        #calculator.calculerPositionsCentroides(calculator.clusters.values())
+        while True:
+            #threads.calculer()
+            i+=1
+            self.sequenceCalcul(self.points, self.clusters.values())
+            print("calculé",i)        
+                
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
     
     
     def genererPosition(self):
@@ -235,6 +240,7 @@ class EnsembleThreads():
             mythread.join()
         self.calculator.creerClustersAPartirDesPoints(self.calculator.points, self.calculator.clusters.values())
         self.calculator.calculerPositionsCentroides(self.calculator.clusters.values())
+
 if __name__ == '__main__':
     calculator=Calculator()
     i=0
