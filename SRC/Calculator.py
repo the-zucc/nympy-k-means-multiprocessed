@@ -1,10 +1,11 @@
 #-*- coding: utf8 -*-
-#===============================================================================================
+#========================================================================================================================
 # Fichier : Main.py
 # Projet  : B52_TP3
 # Auteurs : Kevin Mwanangwa, Laurier Lavoie-Giasson, Chris David
-#===============================================================================================
+#=========================================================================================================================
 
+#IMPORTS =================================================================================================================
 from multiprocessing import Process
 from Points import *
 import random
@@ -12,29 +13,106 @@ import numpy as np
 import threading
 from test.regrtest import multiprocessing
 
+#CONSTANTES ==============================================================================================================
 nbThreads=4
 largeurtest=3000
 hauteurtest=200
 nombrepointstest=25000
 nombrecentroidestest=10
 
+#CLASSE Calculator =======================================================================================================
 class Calculator():
-    def __init__(self):
+    def __init__(self,Params,Database):
+        #Variables -------------------------------------------------------------------------------------
+        self.Database = Database       
+        self.nombreDeMotsAGarder = Params[3]
         self.points=[]
         self.centroides=[]
         self.clusters={}
-        #self.pointsAEnlever=[]
         
-        for i in range(nombrepointstest):
-            position=self.genererPosition()
-            self.points.append(Point(position, 1))
+        #Initialiser la matrice -------------------------------------------------------------------------
+        self.nbMots = len(Database.dictionnaire)
+        self.matrice = np.zeros( (self.nbMots,self.nbMots) )   
+        self.Database.csvLecture(self.matrice,Params[1]) #Remplir matrice avec taille de fenetre  
+        print(self.matrice)   
+        
+        #Loader la stop-list ----------------------------------------------------------------------------
+        self.chargerStopList()
+        
+        #Initialiser les centroides par mots -------------------------------------------------------------
+        if Params[0] == "mots":
+            self.mode = 1            
+            self.genererCentroidesParMots(Params[2])
+        #Initialiser les centroides aléatoirement --------------------------------------------------------
+        else: 
+            self.mode = 2
+            self.genererCentroidesAleatoires(Params[2])   
+    
+    #REMPLIR LA STOP-LIST ====================================================================================================
+    def chargerStopList(self):
+        #Ouvrir liste ------------------------------------------------------------------------------------
+        fichier = "TP3_KevLauChr_StopList.txt"
+        stream = open(fichier,"r", encoding="utf-8")
+       
+        #Split les mots et fermer stream -----------------------------------------------------------------
+        liste = stream.read().replace('\ufeff','').split() 
+        stream.close()
+                
+        self.stoplist = []       
+        #Verifier chaque mots du dictionnaire ------------------------------------------------------------
+        for (mot,idx) in self.Database.dictionnaire.items():
+            #Si mot actuel est dans la stop-liste
+            if mot in liste:
+                #Ajouter index du mot a la liste d'indexes (idx -1 puisque les indexes dans la BD commencent a 1)
+                self.stoplist.append(idx)                                  
+     
+    #GENERER DES CENTROIDES ALÉATOIRES =======================================================================================
+    def genererCentroidesAleatoires(self,NombreCentroides):
+        pass
+
+    #GENERER DES CENTROIDES AUX MOTS VOULUS ==================================================================================
+    def genererCentroidesParMots(self,ListeMots):
+        for Mot in ListeMots:            
+            #Recupere mot dans le dictionnaire ---------------------------------------------------------------
+            index = self.Database.dictionnaire[Mot] 
             
-        for i in range(nombrecentroidestest):
-            position=self.genererPosition()
-            centroide=Centroide(position)
-            self.centroides.append(centroide)
-            #print(centroide.id)
-            self.clusters[centroide.id]=Cluster(centroide)
+            #Creer le centroide avec le mot dans la matrice --------------------------------------------------
+            CentroTmp = Centroide(self.matrice[index])
+            self.centroides.append(CentroTmp)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     def genererPosition(self):
         position=np.zeros(8)

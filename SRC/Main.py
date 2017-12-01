@@ -1,22 +1,22 @@
 #-*- coding: utf8 -*-
-#===============================================================================================
+#========================================================================================================================
 # Fichier : Main.py
 # Projet  : B52_TP3
 # Auteurs : Kevin Mwanangwa, Laurier Lavoie-Giasson, Chris David
-#===============================================================================================
+#========================================================================================================================
 
-#Imports =======================================================================================
+#IMPORTS ================================================================================================================
 import sys
 from pip._vendor.distlib.compat import raw_input
 from SQLConnector import SQLConnector
+from Calculator import Calculator
 import time
 
-#Methode user_Input ===========================================================================
+#ANALYSER LA LIGNE DE COMMANDE/INPUT DU L'USAGER ========================================================================
 def user_Input(DB):
-    print("   /PROGRAM/  Vérification des paramètres ")
-    #Init
-    taille = nbCen = mots = nbMots = strangerDanger = False    
-    #Verifier la presence des arguments -------------------------------------------------------
+    #Verifier la presence des arguments ------------------------------------------------------------------
+    print("   /PROGRAM/  Vérification des paramètres ")        
+    taille = nbCen = mots = nbMots = strangerDanger = False        
     for argument in sys.argv:
         if argument == "-t":
             taille = True
@@ -34,11 +34,10 @@ def user_Input(DB):
             strangerDanger = True
             idxStranger = sys.argv.index(argument)
             
-    #Verifier argument etranger
+    #Si il n'y a pas d'argument étranger, verifier la syntaxe --------------------------------------------
     if not strangerDanger:
-        #Par nombre --------------------------------------------------------------------------------
-        if (taille and nbCen) and not (nbMots or mots):        
-            #Taille
+        #Verifier Taille de fenetre ----------------------------------------------------------
+        if taille:
             try:
                 ValeurTaille = int(sys.argv[idxTaille+1])   
                 #Verifier si il a des coocs avec cette fenetre
@@ -48,7 +47,13 @@ def user_Input(DB):
             #En cas de valeur non-numerique
             except ValueError:
                 print("\n     /ERROR/  Paramètre invalide, ('"+sys.argv[idxTaille+1]+"') n'est pas une valeur numerique.") 
-                return (False,)            
+                return (False,)   
+        else:         
+            print("\n     /ERROR/  Paramètre manquant, ('-t')") 
+            return (False,)   
+                
+        #Initialisation par nombre de centroides ---------------------------------------------
+        if nbCen and not mots: 
             #NbCen
             try:
                 ValeurCen = int(sys.argv[idxNbCen+1])            
@@ -56,25 +61,9 @@ def user_Input(DB):
             except ValueError:
                 print("\n     /ERROR/  Paramètre invalide, ('"+sys.argv[idxNbCen+1]+"') n'est pas une valeur numerique.") 
                 return (False,)
-            
-            #Si tout est bon
-            return (True,"nombres",ValeurTaille,ValeurCen)  
-        elif (taille and nbCen) and (nbMots or mots):
-            if nbMots:
-                print("\n     /ERROR/  Paramètre invalide, ('"+sys.argv[idxNbMots]+"') n'est pas un argument valide pour cette opération (-t,-nc)") 
-            if mots:
-                print("\n     /ERROR/  Paramètre invalide, ('"+sys.argv[idxMots]+"') n'est pas un argument valide pour cette opération (-t,-nc)") 
-            return (False,) 
-       
-        #Par mots --------------------------------------------------------------------------------
-        elif not (taille or nbCen) and (nbMots and mots):             
-            #Nombremots
-            try:
-                NombreDeMots = int(sys.argv[idxNbMots+1])            
-            #En cas de valeur non-numerique
-            except ValueError:
-                print("\n     /ERROR/  Paramètre invalide, ('"+sys.argv[idxTaille+1]+"') n'est pas une valeur numerique.") 
-                return (False,) 
+        
+        #Initialisation par mots -------------------------------------------------------------       
+        elif mots and not nbCen:   
             #Liste des mots
             i = idxMots+1
             ListeMots = []
@@ -86,46 +75,58 @@ def user_Input(DB):
                     #Ajouter mot
                     ListeMots.append(sys.argv[i])
                 else:
-                    print("\n     /ERROR/  Paramètre invalide, le mot ('"+sys.argv[i]+"') n'est pas dans le dictionnaire.") 
+                    print("\n     /ERROR/  Paramètre invalide, le mot ('"+motTmp+"') n'est pas dans le dictionnaire.") 
                     return (False,) 
-                i+=1
-                
-            #Si tout est bon
-            return (True,"mots",ListeMots,NombreDeMots)
-        
-        elif (taille or nbCen) and (nbMots and mots): 
-            if taille:
-                print("\n     /ERROR/  Paramètre invalide, ('"+sys.argv[idxTaille]+"') n'est pas un argument valide pour cette opération (-m,-n)") 
-            if nbCen:
-                print("\n     /ERROR/  Paramètre invalide, ('"+sys.argv[idxNbCen]+"') n'est pas un argument valide pour cette opération (-m,-n)") 
+                i+=1                
+            
+        #Si parametre en trop ou incompatible ------------------------------------------------
+        else:
+            print("\n     /ERROR/  Paramètres incompatibles, choisir UN des deux (-nc OU -m).") 
             return (False,) 
             
+        #Verifier le nombre de mots -----------------------------------------------------------
+        if nbMots:
+            try:
+                NombreDeMots = int(sys.argv[idxNbMots+1])            
+            #En cas de valeur non-numerique
+            except ValueError:
+                print("\n     /ERROR/  Paramètre invalide, ('"+sys.argv[idxNbMots+1]+"') n'est pas une valeur numerique.") 
+                return (False,)
+        
+        #Si on arrive ici, params valides
+        if mots:
+            return(True,"mots",ValeurTaille,ListeMots,NombreDeMots)
+        else:
+            return(True,"nb",ValeurTaille,ValeurCen,NombreDeMots)             
+   
+    #Si parametre invalide    
     else:  
         print("\n     /ERROR/  Paramètre invalide, ('"+sys.argv[idxStranger]+"') n'est pas un argument valide.") 
-        return (False,)  
-    
-#Methode Main =================================================================================
-def main():
-    
+        return (False,)      
+
+#MAIN ===================================================================================================================
+def main():    
     #Connection à la bd
-    Database = SQLConnector()    
-    
+    Database = SQLConnector()        
     #Verifier l'input/Ligne de commande
     rep = user_Input(Database)     
     #Si input valide
     if rep[0]:
+        TailleFenetre = rep[2]
+        NombreDeMots = rep[4]
         #Si entree par mots
         if rep[1] == "mots":
-            ListeDesMots = rep[2]
-            NombreDeMots = rep[3]
-            print("   /PROGRAM/  [Clustering] Liste de mots :",ListeDesMots,"  Nombre de mots a afficher par cluster :",NombreDeMots)
+            ListeDesMots = rep[3]            
+            print("   /PROGRAM/  [Clustering] "+" Taille de la fenetre :",TailleFenetre,"  Liste de mots :",ListeDesMots," Nb de mots à garder :",NombreDeMots)
+            Params = (rep[1],TailleFenetre,ListeDesMots,NombreDeMots)
+            #Calc = Calculator(Params,Database)
         #Si entree par nombre
-        else:
-            TailleFenetre = rep[2]
+        else:            
             NombreCentroides = rep[3]
-            print("   /PROGRAM/  [Clustering] Taille de la fenetre :",TailleFenetre,"  Nb de centroides :",NombreCentroides)
-    
-
-#Appel Fonction Main ==========================================================================
+            print("   /PROGRAM/  [Clustering] "+" Taille de la fenetre :",TailleFenetre,"  Nb de centroides :",NombreCentroides," Nb de mots à garder :",NombreDeMots)
+            Params = (rep[1],TailleFenetre,NombreCentroides,NombreDeMots)
+            #Calc = Calculator(Params,Database)
+            
+#EXECUTION DU PROGRAMME =================================================================================================
 if __name__ == '__main__':
     sys.exit(main());

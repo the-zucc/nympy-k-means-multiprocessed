@@ -1,18 +1,18 @@
 #-*- coding: utf8 -*-
-#===============================================================================================
+#=========================================================================================================================
 # Fichier : SQLConnector.py
 # Projet  : B52_TP3
 # Auteurs : Kevin Mwanangwa, Laurier Lavoie-Giasson, Chris David
-#===============================================================================================
+#=========================================================================================================================
 
-#Imports =======================================================================================
+#Imports =================================================================================================================
 import sys
 import cx_Oracle
 import time
 import csv
 import os
 
-#Class SQLConnector ============================================================================
+#CLASSE SQLConnector =====================================================================================================
 class SQLConnector():
     def __init__ (self):
         #CONNECTION A LA BD --------------------------------------------------------------------
@@ -25,17 +25,14 @@ class SQLConnector():
         self.connexion = cx_Oracle.connect(chaineConnexion)
         self.cur = self.connexion.cursor()
         endConn = time.time() - startConn        
-        print("     /TIMER/  Connection avec la BD : ",endConn, "secondes")        
-               
+        print("     /TIMER/  Connection avec la BD : ",endConn, "secondes") 
         #DICTIONNAIRE ---------------------------------------------------------------------------
-        self.dictionnaire = {}
-        #Init le dictionnaire
+        self.dictionnaire = {}        
         print("   /PROGRAM/  Remplir dictionnaire interne")
         startDict = time.time()
         self.get_dict()  
         endDict = time.time() - startDict
         print("     /TIMER/  Recuperer ",len(self.dictionnaire)," lignes dans la table DICTIONNAIRE : ",endDict, "secondes")   
-        
         #COOCCURRENCES --------------------------------------------------------------------------
         #Si fichier cvm n'existe pas, loader Coocs dans la bd est generer CSV
         if not os.path.isfile('TP3_KevLauChr.csv'):           
@@ -53,14 +50,15 @@ class SQLConnector():
             endCSV = time.time()-startCSV
             print("     /TIMER/  Écrire ",len(self.coocs)," lignes dans le fichier TP3_KevLauChr.csv : ",endCSV, "secondes")              
         
-    #Cherche la table DICTIONNAIRE de la BD   
+    #RECUPERER LA TABLE DICTIONNAIRE DANS LA BD =================================================== 
     def get_dict(self):
         enonce = "SELECT * FROM dictionnaire"        
         self.cur.execute(enonce)
         for rangee in self.cur.fetchall():    
             #Inserer (mot,id)         
-            self.dictionnaire[rangee[1]]=int(rangee[0])   
-    
+            self.dictionnaire[rangee[1]]=int(rangee[0])-1   
+   
+    #VERIFIER LA TAILLE DE LA FENETRE DANS LA BD ==================================================
     def verifFenetre(self,fenetre):
         enonce = "SELECT count(*) FROM cooccurrences WHERE fenetre_cooc = "+str(fenetre)+" ORDER BY id"        
         self.cur.execute(enonce)
@@ -69,10 +67,9 @@ class SQLConnector():
         if nbCoocs != 0:
             return True
         else:
-            return False     
-           
+            return False 
      
-    #Cherche la table COOCCURRENCES de la BD       
+    #RECUPERER LA TABLE COOCCURRENCES DANS LA BD ==================================================
     def get_coocs(self):
         enonce = "SELECT * FROM cooccurrences ORDER BY id"        
         self.cur.execute(enonce)
@@ -87,6 +84,7 @@ class SQLConnector():
             self.nbcoocs[idx] = nbc
             self.tailleFenetre[idx] = taille
             
+    #REMPLIR LE FICHIER CSV ======================================================================
     def csvEcriture(self):
         f = open('TP3_KevLauChr.csv','w')
         w = csv.writer(f)
@@ -96,13 +94,15 @@ class SQLConnector():
             w.writerow([id_mot1, id_mot2, fenetre, score])   
         f.close()        
         
+    #LIRE LES DONNÉES DU FICHIER CSV =============================================================
     def csvLecture(self, matrice, fenetre):
-        lectureFichier = csv.reader(open("TP3_KevLauChr.csv","r"))
+        lectureFichier = csv.reader(open("TP3_KevLauChr.csv","r"))        
         for row in lectureFichier:
-            if int(row[2]) == fenetre:
-                idmot1 = int(row[0])
-                idmot2 = int(row[1])
-                nbcoocs = int(row[3])
-                matrice[idmot1][idmot2] = nbcoocs
-        
+            if(len(row) > 0):           
+                if int(row[2]) == fenetre:
+                    idmot1 = int(row[0])-1
+                    idmot2 = int(row[1])-1
+                    nbcoocs = int(row[3])
+                    matrice[idmot1][idmot2] = nbcoocs
+            
         

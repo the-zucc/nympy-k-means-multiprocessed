@@ -14,6 +14,8 @@ class IdMaker():
     def nextval():
         IdMaker.currval+=1
         return IdMaker.currval
+    
+    
 class Centroide():
     def __init__(self,vectPosition):
         self.vectPosition=vectPosition

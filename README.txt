@@ -1,23 +1,21 @@
 =========================================================================
 Cours 2: Vendredi 17 Novembre 2017
 =========================================================================
-	Kevin   : Faire l'initialisation
+	Kevin   : Faire l'initialisation (MAIN.PY)
 	Laurier : Commencer les calculs
-	Chris   : Faire le fichier csv
+	Chris   : Faire le fichier csv #####DONE
 =========================================================================
 Cours 3: Mercredi 22 Novembre 2017
 =========================================================================
-
-
-
-
+	Kevin   : Faire l'initialisation (MAIN.PY) #####DONE
+	Laurier : Commencer les calculs
+	Chris   : Faire la lecture csv et remplissage matrice #####DONE
 =========================================================================
 Cours 4: Vendredi 24 Novembre 2017
 =========================================================================
-
-
-
-
+	Kevin   : Faire initialisation de la matrice 
+	Laurier : Commencer les calculs
+	Chris   : Faire le 
 =========================================================================
 Cours 5: Mercredi 29 Novembre 2017
 =========================================================================
