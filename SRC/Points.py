@@ -20,10 +20,17 @@ class Centroide():
     def __init__(self,vectPosition):
         self.vectPosition=vectPosition
         self.id=IdMaker.nextval()
+        self.hasChanged = True
+        
     
     def changerPosition(self, vectNouvellePosition):
         self.anciennePosition=self.vectPosition
         self.vectPosition=vectNouvellePosition
+        
+        if (self.anciennePosition.all() == vectNouvellePosition.all()):
+            self.hasChanged = False
+        else:
+            self.hasChanged = True
 #CLASSE POINT ===================================================================================
 class Point():
     def __init__(self,vectPosition,poids):

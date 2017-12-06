@@ -9,7 +9,7 @@
 import sys
 from pip._vendor.distlib.compat import raw_input
 from SQLConnector import SQLConnector
-from Calculator import Calculator
+from Calculator import *
 import time
 
 #ANALYSER LA LIGNE DE COMMANDE/INPUT DU L'USAGER ========================================================================
@@ -119,7 +119,7 @@ def main():
             ListeDesMots = rep[3]            
             print("   /PROGRAM/  [Clustering] "+" Taille de la fenetre :",TailleFenetre,"  Liste de mots :",ListeDesMots," Nb de mots à garder :",NombreDeMots)
             Params = (rep[1],TailleFenetre,ListeDesMots,NombreDeMots)
-            Calc = Calculator(Params,Database)
+            Calc = Calculator1(Params,Database)
         #Si entree par nombre
         else:            
             NombreCentroides = rep[3]
