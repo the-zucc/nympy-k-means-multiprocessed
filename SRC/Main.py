@@ -131,7 +131,7 @@ def main():
             NombreCentroides = rep[3]
             print("   /PROGRAM/  [Clustering] "+" Taille de la fenetre :",TailleFenetre,"  Nb de centroides :",NombreCentroides," Nb de mots à garder :",NombreDeMots)
             Params = (rep[1],TailleFenetre,NombreCentroides,NombreDeMots)
-            Calc = Calculator(Params,Database)
+            Calc = Calculator1(Params,Database)
             
 #EXECUTION DU PROGRAMME =================================================================================================
 if __name__ == '__main__':
