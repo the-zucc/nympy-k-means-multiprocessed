@@ -44,10 +44,12 @@ class Calculator1():
         #Initialiser les centroides par mots -------------------------------------------------------------
         if Params[0] == "mots":
             self.mode = 1            
-            self.genererCentroidesParMots(Params[2])
+            self.nbCentroides = len(Params[2])
+            self.genererCentroidesParMots(Params[2])            
         #Initialiser les centroides aléatoirement --------------------------------------------------------
         else: 
             self.mode = 2
+            self.nbCentroides = Params[2]
             self.genererCentroidesAleatoires(Params[2])   
         
         self.initClusters()
@@ -75,11 +77,26 @@ class Calculator1():
     
     def initClusters(self):        
         self.clusters = []
-        for c in self.centroides:
-            self.clusters.append([])        
+        for i in range(self.nbCentroides):
+            self.clusters.append([])   
+                 
     #GENERER DES CENTROIDES ALÉATOIRES =======================================================================================
     def genererCentroidesAleatoires(self,NombreCentroides):
-        pass
+        #Init les clusters
+        self.initClusters()
+        print("INIT CENTROIDES ALÉATOIRES")
+        #Par Centroide a generer        
+        for i in range(NombreCentroides):
+            #Nombre aléatoire de points a inserer dans notre "faux" cluster
+            nbIdx = (int)(random.randrange(5,(int)(self.nbPoints/NombreCentroides)))
+            for c in range(nbIdx):
+                #Ajouter point à idx aléatoire dans cluster i
+                idx = (int)(random.randrange(0,self.nbPoints))
+                self.clusters[i].append(idx)
+            print("Cluster",i+1," a",len(self.clusters[i]),"points.")
+           
+        #Calculer barycentres pour initialiser les centroides aléatoires, puis debuter calculs avec ces centroides
+        self.calculerBarycentres()    
 
     #GENERER DES CENTROIDES AUX MOTS VOULUS ==================================================================================
     def genererCentroidesParMots(self,ListeMots):
@@ -91,7 +108,7 @@ class Calculator1():
             self.centroides.append(self.matrice[index])            
     
     def leastSquare(self,a,b):
-        return np.sum(np.absolute(a-b))    
+        return np.sum(np.square(a-b))    
             
     def calculerDistances(self):
         #Passer dans chaque points  
@@ -115,8 +132,7 @@ class Calculator1():
     def calculerBarycentres(self):
         #Passer dans chaque cluster
         barycentres = []
-        for c in self.clusters:
-            #Vecteurs = self.matrice[]
+        for c in self.clusters:  
             CoordsActuelles = np.array([Vecteur for Vecteur in self.matrice[[idx for idx in c]]])       
             
             #Faire la moyenne des points             
