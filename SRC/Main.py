@@ -120,6 +120,12 @@ def main():
             print("   /PROGRAM/  [Clustering] "+" Taille de la fenetre :",TailleFenetre,"  Liste de mots :",ListeDesMots," Nb de mots à garder :",NombreDeMots)
             Params = (rep[1],TailleFenetre,ListeDesMots,NombreDeMots)
             Calc = Calculator1(Params,Database)
+            Calc.test()
+#             nbt=4
+#             threads=EnsembleThreads1(Calc, nbt)
+#             while True:
+#                 threads.calculer()
+            
         #Si entree par nombre
         else:            
             NombreCentroides = rep[3]

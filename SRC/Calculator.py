@@ -12,7 +12,7 @@ import random
 import numpy as np
 import threading
 import time
-from test.regrtest import multiprocessing
+from multiprocessing import Process, sharedctypes, Queue
 
 #CONSTANTES ==============================================================================================================
 nbThreads=4
@@ -55,7 +55,7 @@ class Calculator1():
         self.initClusters()
         
         startSeq = time.time()    
-        self.test()
+        #self.test()
         print(" ====== Sequence du Calculator -copie (1) faite en : ",time.time()-startSeq,"secondes.")
         
     def chargerStopList(self):
@@ -357,9 +357,9 @@ class Calculator():
             if point.cluster is not None:
                 point.cluster.points.append(point)
         
-class CalculatorThread(multiprocessing.Process):
+class CalculatorThread(Process):
     def __init__(self, calculator,indexThread, nombreTotalThreads):
-        multiprocessing.Process.__init__(self,name=("threadCalculatrice-"+str(indexThread)))
+        Process.__init__(self,name=("threadCalculatrice-"+str(indexThread)))
         print(self.name)
         self.indexThread=indexThread
         self.calculator=calculator
@@ -393,11 +393,96 @@ class EnsembleThreads():
         self.calculator.creerClustersAPartirDesPoints(self.calculator.points, self.calculator.clusters.values())
         self.calculator.calculerPositionsCentroides(self.calculator.clusters.values())
 
+def initClusters(nombreCentroides):
+    return [[] for i in range(0, nombreCentroides)]
+
+def calculerDistances(sharedArrayPoints, nombrePoints, sharedArrayCentroides, nombreCentroides, queuePointsClusters, indexDebut, indexFin):
+    matrice=np.frombuffer(sharedArrayPoints.get_obj()).reshape((nombrePoints, nombrePoints))
+    centroides=np.frombuffer(sharedArrayCentroides.get_obj()).reshape((nombreCentroides, nombrePoints))
+    #Passer dans chaque points
+    clusters=initClusters(nombreCentroides)
+    for i in range(len(clusters)):
+        clusters[i].append(i)
+    i=0
+    
+    for i in range(indexDebut, indexFin):
+        distances = []
+        p = matrice[i]
+        for c in centroides:
+            #Calcul distance et ajoute a la liste
+            distances.append(leastSquare(p, c))    
+        #Trouver le plus pres et son index
+        closest = np.min(distances)
+        indexClosest = distances.index(closest)
+        #L'assigner au bon cluster (index du centroide, liste des index des points dans la matrice)
+        clusters[indexClosest].append(i)
+        #print(i)
+    for i in range(len(clusters)):
+        print("cluster",i,":",clusters[i][1:])
+    #queuePointsClusters.put(clusters)
+def leastSquare(a,b):
+    #c=a-b
+    #return np.sum(c)
+    return np.sum(np.square(a-b))
+class EnsembleThreads1():
+    def __init__(self, calculator, nombreThreads):
+        self.calculator = calculator
+        self.nombreThreads=nombreThreads
+        self.nombrePoints=self.calculator.nbMots
+        self.nombreCentroides=len(self.calculator.centroides)
+        #définition des objets partagés entre les threads
+        self.sharedArrayPoints=sharedctypes.Array('d', self.nombrePoints*self.nombrePoints)#la matrice, convertie en une ligne
+        self.queuePointsClusters=Queue()#la queue qui devrait servir à passer des objets entre les threads 
+        self.sharedArrayCentroides=sharedctypes.Array('d',self.nombreCentroides*self.nombrePoints)#la matrice de centroides, ceonvertie en une ligne
+        
+        #définition de la matrice de centroides
+        self.matrCentroides=np.frombuffer(self.sharedArrayCentroides.get_obj()).reshape((self.nombreCentroides, self.nombrePoints))
+        for i in range(self.nombreCentroides):
+            for j in range(self.nombrePoints):
+                print("centroide:",i,j)
+                self.matrCentroides[i][j]=self.calculator.centroides[i][j]
+        
+        #définition de la matrice des Points
+        self.matrPoints=np.frombuffer(self.sharedArrayPoints.get_obj()).reshape((self.nombrePoints, self.nombrePoints))
+        for i in range(self.nombrePoints):
+            for j in range(self.nombrePoints):
+                self.matrPoints[i][j]=self.calculator.matrice[i][j]
+            print("point:",i)
+        self.nombreEntreesParThread=self.nombrePoints//self.nombreThreads
+        self.indexes=[]
+        #définition des indexes pour les threads
+        for i in range(self.nombreThreads):
+            idxD=i*self.nombreEntreesParThread
+            if i == self.nombreThreads-1:
+                idxF=self.nombrePoints-1
+            else:
+                idxF=((i+1)*self.nombreEntreesParThread)-1
+            self.indexes.append((idxD, idxF))
+    def calculer(self):
+        threads=[]
+        #ici, on initie chaque thread
+        for i in range(self.nombreThreads):
+            mythread=Process(target=calculerDistances, args=(self.sharedArrayPoints, self.nombrePoints, self.sharedArrayCentroides, self.nombreCentroides, self.queuePointsClusters, self.indexes[i][0], self.indexes[i][1]))
+            mythread.start()
+            threads.append(mythread)
+        for mythread in threads:
+            mythread.join()
+            mythread.terminate()
+        self.fetchDesQueuesEtCalculerCentroides()
+    def fetchDesQueuesEtCalculerCentroides(self):
+        while not self.queuePointsClusters.empty():
+            tab=self.queuePointsClusters.get()
+            print(tab)
+            idxCluster=tab[0]
+            for i in range(1,len(tab)):
+                #self.calculator.clusters[idxCluster].append(tab[i])
+                print(tab[i])
+
 if __name__ == '__main__':
-   test1 = {}
-   test1[1] = (420,23,23,23)
-   test1[2] = (80,20)
-   test1[3] = (166,)
-   
-   for i in test1.values():
-       print(len(i))
+    test1 = {}
+    test1[1] = (420,23,23,23)
+    test1[2] = (80,20)
+    test1[3] = (166,)
+    
+    for i in test1.values():
+        print(len(i))
