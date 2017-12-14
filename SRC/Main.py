@@ -41,9 +41,9 @@ def user_Input(DB):
             try:
                 ValeurTaille = int(sys.argv[idxTaille+1])   
                 #Verifier si il a des coocs avec cette fenetre
-                if not DB.verifFenetre(ValeurTaille):
-                    print("\n     /ERROR/  Aucune cooccurrence avec une fenetre de taille ('"+sys.argv[idxTaille+1]+"') présente dans la base de donnée.") 
-                    return (False,)         
+#                 if not DB.verifFenetre(ValeurTaille):
+#                     print("\n     /ERROR/  Aucune cooccurrence avec une fenetre de taille ('"+sys.argv[idxTaille+1]+"') présente dans la base de donnée.") 
+#                     return (False,)         
             #En cas de valeur non-numerique
             except ValueError:
                 print("\n     /ERROR/  Paramètre invalide, ('"+sys.argv[idxTaille+1]+"') n'est pas une valeur numerique.") 
@@ -120,11 +120,11 @@ def main():
             print("   /PROGRAM/  [Clustering] "+" Taille de la fenetre :",TailleFenetre,"  Liste de mots :",ListeDesMots," Nb de mots à garder :",NombreDeMots)
             Params = (rep[1],TailleFenetre,ListeDesMots,NombreDeMots)
             Calc = Calculator1(Params,Database)
-            Calc.test()
-#             nbt=4
-#             threads=EnsembleThreads1(Calc, nbt)
-#             while True:
-#                 threads.calculer()
+            #Calc.test()
+            nbt=1
+            threads=EnsembleThreads1(Calc, nbt)
+            while True:
+                threads.calculer()
             
         #Si entree par nombre
         else:            
@@ -132,7 +132,18 @@ def main():
             print("   /PROGRAM/  [Clustering] "+" Taille de la fenetre :",TailleFenetre,"  Nb de centroides :",NombreCentroides," Nb de mots à garder :",NombreDeMots)
             Params = (rep[1],TailleFenetre,NombreCentroides,NombreDeMots)
             Calc = Calculator1(Params,Database)
-            
+            Calc.test()
+#             nbt=4
+#             threads=EnsembleThreads1(Calc, nbt)
+#             start=time.time()
+#             i=0
+#             while i<20:
+#                 startiter = time.time()
+#                 threads.calculer()
+#                 print("itération",i,"en",time.time()-startiter,"secondes.")
+#                 i+=1
+#             print("temps pour 20 itérations:", time.time()-start,"secondes")
+#             
 #EXECUTION DU PROGRAMME =================================================================================================
 if __name__ == '__main__':
     sys.exit(main());

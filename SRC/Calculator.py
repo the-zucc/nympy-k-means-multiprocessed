@@ -21,16 +21,18 @@ hauteurtest=200
 nombrepointstest=45500
 nombrecentroidestest=10
 
+# REMOVE THIS .. MAYBE #
+nbPointsParClusters = []
+
 class Calculator1():
     def __init__(self,Params,Database):
         #Variables -------------------------------------------------------------------------------------
         self.Database = Database       
         self.nombreDeMotsAGarder = Params[3]        
         self.centroides=[]
-        self.clusters=[]
-        
+        self.clusters=[]       
         #Initialiser la matrice -------------------------------------------------------------------------
-        self.nbMots = len(Database.dictionnaire)
+        self.nbMots = 14836 #HARDCODED # REMOVE THIS #
         self.matrice = np.zeros( (self.nbMots,self.nbMots) )   
         self.Database.csvLecture(self.matrice,Params[1]) #Remplir matrice avec taille de fenetre  
         print(self.matrice)  
@@ -39,7 +41,7 @@ class Calculator1():
         print("NB de points : ", self.nbPoints)
                 
         #Loader la stop-list ----------------------------------------------------------------------------
-        self.chargerStopList()
+        #self.chargerStopList() # REMOVE THIS #
         
         #Initialiser les centroides par mots -------------------------------------------------------------
         if Params[0] == "mots":
@@ -56,7 +58,7 @@ class Calculator1():
         
         startSeq = time.time()    
         #self.test()
-        print(" ====== Sequence du Calculator -copie (1) faite en : ",time.time()-startSeq,"secondes.")
+        print(" ====== Sequence du Calculator faite en : ",time.time()-startSeq,"secondes.")
         
     def chargerStopList(self):
         #Ouvrir liste ------------------------------------------------------------------------------------
@@ -96,7 +98,7 @@ class Calculator1():
             print("Cluster",i+1," a",len(self.clusters[i]),"points.")
            
         #Calculer barycentres pour initialiser les centroides aléatoires, puis debuter calculs avec ces centroides
-        self.calculerBarycentres()    
+        self.calculerBarycentres(True)    
 
     #GENERER DES CENTROIDES AUX MOTS VOULUS ==================================================================================
     def genererCentroidesParMots(self,ListeMots):
@@ -109,8 +111,41 @@ class Calculator1():
     
     def leastSquare(self,a,b):
         return np.sum(np.square(a-b))    
+    
+    # REMOVE THIS #
+    def calculerDistancesTMP(self):
+        
+        self.initClusters()
+        i=0
+        distances = []
+        while i < self.nbCentroides:
+            startTMP = time.time()
+            distPoints =[]
+            for p in self.matrice:
+                distPoints.append(self.leastSquare(self.centroides[i], p))
+            distances.append(distPoints)
+            i += 1
+        print("DISTANCES : ",len(distances))
+        for d in range(len(distances[0])):
+            print("POINT :",d)
+            actual = []
+            actual.append(distances[0][0:self.nbCentroides][0:self.nbCentroides])
+            print("ACTUAL :",actual)
+            closest = np.min(actual)
+            print("CLOSEST :",closest)
+            indexClosest = actual[0].index(closest) 
+            print("INDEX :",indexClosest,"\n\n") 
+            self.clusters[indexClosest].append(d) 
+        
+            #print("Calculer la distance entre centroide",i,"et ",self.nbPoints,"points took",time.time()-startTMP,"secondes.")
             
     def calculerDistances(self):
+        startDist = time.time()
+        nbPointsParClusters = []
+        for c in self.clusters:
+            nbPointsParClusters.append(len(c))
+        print("Nombre de points des clusters precedents:",nbPointsParClusters)
+            
         #Passer dans chaque points  
         self.initClusters()           
         i=0
@@ -128,51 +163,74 @@ class Calculator1():
             #L'assigner au bon cluster (index du centroide, liste des index des points dans la matrice)
             self.clusters[indexClosest].append(i)         
             i+=1 
+        
+        for i in range(len(self.clusters)):
+            if nbPointsParClusters[i] != len(self.clusters[i]):
+                return True
+        return False
+        # REMOVE THIS #print("Calculer les distances de",len(self.centroides),"centroides sur",self.nbPoints,"points prend",time.time()-startDist,"secondes.")
     
-    def calculerBarycentres(self):
+    def transfereCentroides(self,barycentres):
+        self.centroides = []
+        for c in barycentres:
+            self.centroides.append(c)
+        
+    def calculerBarycentres(self,firstTime = False):#REMOVE THIS AFTER PLZ#
         #Passer dans chaque cluster
         barycentres = []
         for c in self.clusters:  
-            CoordsActuelles = np.array([Vecteur for Vecteur in self.matrice[[idx for idx in c]]])       
-            
+            CoordsActuelles = np.array([Vecteur for Vecteur in self.matrice[[idx for idx in c]]])   
             #Faire la moyenne des points             
             barycentres.append(np.mean(CoordsActuelles,axis=0))           
        
-        #Si les nouveaux barycentres sont egaux aux ancients centroide (Donc rien ne bouge)
-        if [centroide.all() for centroide in self.centroides] == [barycentre.all() for barycentre in barycentres]:
-            print("Change")
-            print(barycentres[0][0:3], self.centroides[0][0:3])
-            self.centroides = barycentres
-            print(barycentres[0][0:3], self.centroides[0][0:3])
-            return False
+        #Si les nouveaux barycentres sont differents des ancients centroides (changements)
+        if ( not np.array_equal(barycentres,self.centroides)) or firstTime:  
+            if firstTime:
+                print("Calcul barycentres pour centroides aleatoires\n\n")                 
+            self.transfereCentroides(barycentres)           
+            return True
         #Sinon, remplacer centroides par nouveaux barycentres
-        else:
-            print("Pouet")
+        else:       
             #self.centroides = barycentres
             return True
 
     def sequenceCalcul(self):
         #Calcul les distances
-        self.calculerDistances()
-        #Calculer le barycentres, si nouveaux barycentres, poursuivre calcul
-        if(self.calculerBarycentres()):
+        if(self.calculerDistances()):
+            print("----------- Changements")
+            self.calculerBarycentres()
             return True
-        #Sinon, arreter sequence pcq calculs finis
         else:
+            print("----------- Stable")
             return False
             
+#         # REMOVE THIS # self.calculerDistancesTMP()
+#         #Calculer le barycentres, si nouveaux barycentres, poursuivre calcul
+#         if(self.calculerBarycentres()):
+#             print("----------- Changements")
+#             return True
+#         #Sinon, arreter sequence pcq calculs finis
+#         else:
+#             print("----------- Stable")
+#             return False
+            
     def test(self):
-        i=0        
-        while i<20: 
-            debutIteration = time.time()           
-            i+=1
-            self.sequenceCalcul()
+        debutCalculs = time.time()
+        calculating = True   
+        i = 0    
+        while calculating: 
+            i += 1
+            debutIteration = time.time()      
+            calculating = self.sequenceCalcul()
             print("Itération #"+str(i)+" effectuée en",time.time()-debutIteration,"secondes." )
             pos = 0
             while(pos < len(self.clusters)):
                 print("Cluster #"+str(pos+1)+" a "+str(len(self.clusters[pos]))+" points.")
                 pos += 1        
-            print("\n\n")    
+            print("\n\n")  
+            
+        print("======== DONE ! Le tout a ete fait en",time.time()-debutCalculs,"secondes.")
+          
      
      
 #CLASSE Calculator =======================================================================================================
@@ -396,7 +454,7 @@ class EnsembleThreads():
 def initClusters(nombreCentroides):
     return [[] for i in range(0, nombreCentroides)]
 
-def calculerDistances(sharedArrayPoints, nombrePoints, sharedArrayCentroides, nombreCentroides, queuePointsClusters, indexDebut, indexFin):
+def calculerDistances(sharedArrayPoints, nombrePoints, sharedArrayCentroides, nombreCentroides, queuePointsClusters, indexDebut, indexFin, indexThread):
     matrice=np.frombuffer(sharedArrayPoints.get_obj()).reshape((nombrePoints, nombrePoints))
     centroides=np.frombuffer(sharedArrayCentroides.get_obj()).reshape((nombreCentroides, nombrePoints))
     #Passer dans chaque points
@@ -410,7 +468,9 @@ def calculerDistances(sharedArrayPoints, nombrePoints, sharedArrayCentroides, no
         p = matrice[i]
         for c in centroides:
             #Calcul distance et ajoute a la liste
-            distances.append(leastSquare(p, c))    
+            dist=leastSquare(p, c)
+            distances.append(dist)
+            #print(dist)    
         #Trouver le plus pres et son index
         closest = np.min(distances)
         indexClosest = distances.index(closest)
@@ -418,7 +478,9 @@ def calculerDistances(sharedArrayPoints, nombrePoints, sharedArrayCentroides, no
         clusters[indexClosest].append(i)
         #print(i)
     for i in range(len(clusters)):
-        print("cluster",i,":",clusters[i][1:])
+        print("thread",indexThread,"cluster",i,":",len(clusters[i]),"points")
+    print()
+    print()
     #queuePointsClusters.put(clusters)
 def leastSquare(a,b):
     #c=a-b
@@ -438,16 +500,12 @@ class EnsembleThreads1():
         #définition de la matrice de centroides
         self.matrCentroides=np.frombuffer(self.sharedArrayCentroides.get_obj()).reshape((self.nombreCentroides, self.nombrePoints))
         for i in range(self.nombreCentroides):
-            for j in range(self.nombrePoints):
-                print("centroide:",i,j)
-                self.matrCentroides[i][j]=self.calculator.centroides[i][j]
+            self.matrCentroides[i]=self.calculator.centroides[i]
         
         #définition de la matrice des Points
         self.matrPoints=np.frombuffer(self.sharedArrayPoints.get_obj()).reshape((self.nombrePoints, self.nombrePoints))
         for i in range(self.nombrePoints):
-            for j in range(self.nombrePoints):
-                self.matrPoints[i][j]=self.calculator.matrice[i][j]
-            print("point:",i)
+            self.matrPoints[i]=self.calculator.matrice[i]
         self.nombreEntreesParThread=self.nombrePoints//self.nombreThreads
         self.indexes=[]
         #définition des indexes pour les threads
@@ -462,13 +520,13 @@ class EnsembleThreads1():
         threads=[]
         #ici, on initie chaque thread
         for i in range(self.nombreThreads):
-            mythread=Process(target=calculerDistances, args=(self.sharedArrayPoints, self.nombrePoints, self.sharedArrayCentroides, self.nombreCentroides, self.queuePointsClusters, self.indexes[i][0], self.indexes[i][1]))
+            mythread=Process(target=calculerDistances, args=(self.sharedArrayPoints, self.nombrePoints, self.sharedArrayCentroides, self.nombreCentroides, self.queuePointsClusters, self.indexes[i][0], self.indexes[i][1], i))
             mythread.start()
             threads.append(mythread)
         for mythread in threads:
             mythread.join()
             mythread.terminate()
-        self.fetchDesQueuesEtCalculerCentroides()
+        #self.fetchDesQueuesEtCalculerCentroides()
     def fetchDesQueuesEtCalculerCentroides(self):
         while not self.queuePointsClusters.empty():
             tab=self.queuePointsClusters.get()
