@@ -133,16 +133,18 @@ def main():
             Params = (rep[1],TailleFenetre,NombreCentroides,NombreDeMots)
             Calc = Calculator1(Params,Database)
             #Calc.test()
-            nbt=3
+            nbt=2
             threads=EnsembleThreads1(Calc, nbt)
             start=time.time()
             i=0
-            while i<20:
-                startiter = time.time()
-                threads.calculer()
-                print("itération",i,"en",time.time()-startiter,"secondes.")
+            
+            startiter = time.time()
+            timeiter=startiter
+            while threads.calculer():
+                print("itération",i,"en",time.time()-timeiter,"secondes.")
                 i+=1
-            print("temps pour 20 itérations:", time.time()-start,"secondes")
+                timeiter=time.time()
+            print("temps pour toutes les itérations:", time.time()-start,"secondes")
 #             
 #EXECUTION DU PROGRAMME =================================================================================================
 if __name__ == '__main__':

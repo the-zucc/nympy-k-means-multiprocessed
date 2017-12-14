@@ -318,22 +318,25 @@ class EnsembleThreads1():
         for mythread in threads:
             mythread.join()
             del mythread
-        self.calculerBarycentres()
+        return self.calculerBarycentres()
         
         #self.fetchDesQueuesEtCalculerCentroides()
     def calculerBarycentres(self):
+        aChange=False
         barycentres=[]
         for i in range(self.nombreCentroides):
             barycentre=np.mean(np.array([Vecteur for Vecteur in self.matrPoints[[idx for idx in self.dictClusters[i]]]]),axis=0)
             #Faire la moyenne des points             
             barycentres.append(barycentre)
         for i in range(self.nombreCentroides):
+            if not np.array_equal(self.matrCentroides[i], barycentres[i]):
+                aChange = True
             self.matrCentroides[i]=barycentres[i]
         del self.dictClusters
         self.dictClusters=self.manager.dict()
         for i in range(self.nombreCentroides):
             self.dictClusters[i]=[]
-            
+        return aChange
 
 if __name__ == '__main__':
     test1 = {}
