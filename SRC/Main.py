@@ -17,7 +17,7 @@ def user_Input(DB):
     #Verifier la presence des arguments ------------------------------------------------------------------
     print("   /PROGRAM/  Vérification des paramètres ")        
     taille = nbCen = mots = nbMots = strangerDanger = False        
-    for argument in sys.argv:
+    for argument in sys.argv[1:]:
         if argument == "-t":
             taille = True
             idxTaille = sys.argv.index(argument)
@@ -132,17 +132,17 @@ def main():
             print("   /PROGRAM/  [Clustering] "+" Taille de la fenetre :",TailleFenetre,"  Nb de centroides :",NombreCentroides," Nb de mots à garder :",NombreDeMots)
             Params = (rep[1],TailleFenetre,NombreCentroides,NombreDeMots)
             Calc = Calculator1(Params,Database)
-            Calc.test()
-#             nbt=4
-#             threads=EnsembleThreads1(Calc, nbt)
-#             start=time.time()
-#             i=0
-#             while i<20:
-#                 startiter = time.time()
-#                 threads.calculer()
-#                 print("itération",i,"en",time.time()-startiter,"secondes.")
-#                 i+=1
-#             print("temps pour 20 itérations:", time.time()-start,"secondes")
+            #Calc.test()
+            nbt=3
+            threads=EnsembleThreads1(Calc, nbt)
+            start=time.time()
+            i=0
+            while i<20:
+                startiter = time.time()
+                threads.calculer()
+                print("itération",i,"en",time.time()-startiter,"secondes.")
+                i+=1
+            print("temps pour 20 itérations:", time.time()-start,"secondes")
 #             
 #EXECUTION DU PROGRAMME =================================================================================================
 if __name__ == '__main__':
