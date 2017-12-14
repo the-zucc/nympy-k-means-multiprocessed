@@ -11,12 +11,14 @@ from pip._vendor.distlib.compat import raw_input
 from SQLConnector import SQLConnector
 from Calculator import *
 import time
+from numpy import single
 
 #ANALYSER LA LIGNE DE COMMANDE/INPUT DU L'USAGER ========================================================================
 def user_Input(DB):
     #Verifier la presence des arguments ------------------------------------------------------------------
     print("   /PROGRAM/  Vérification des paramètres ")        
-    taille = nbCen = mots = nbMots = strangerDanger = False        
+    taille = nbCen = mots = nbMots = strangerDanger = multiThread = singleThread = False
+    NombreThreads=0       
     for argument in sys.argv[1:]:
         if argument == "-t":
             taille = True
@@ -30,6 +32,11 @@ def user_Input(DB):
         elif argument == "-n":
             nbMots = True
             idxNbMots = sys.argv.index(argument)
+        elif argument == "-mt":
+            multiThread = True
+            idxNbThreads = sys.argv.index(argument)
+        elif argument == "-st":
+            singleThread = True
         elif "-" in argument:
             strangerDanger = True
             idxStranger = sys.argv.index(argument)
@@ -92,13 +99,30 @@ def user_Input(DB):
             except ValueError:
                 print("\n     /ERROR/  Paramètre invalide, ('"+sys.argv[idxNbMots+1]+"') n'est pas une valeur numerique.") 
                 return (False,)
-        
+        if not multiThread and not singleThread:
+            print("\n     /ERROR/  Paramètre manquant, -mt ou -st")
+            return(False,)
+        if multiThread and singleThread:
+            print("\n     /ERROR/  Paramètres incompatibles, choisir UN des deux (-mt OU -st).")
+            return(False,)
+        if singleThread and not multiThread:
+            multiThread=False
+        if multiThread and not singleThread:
+            try:
+                NombreThreads = int(sys.argv[idxNbThreads+1])
+            #En cas de valeur non-numerique
+            except ValueError:
+                print("\n     /ERROR/  Paramètre invalide, ('"+sys.argv[idxNbThreads+1]+"') n'est pas une valeur numerique.") 
+                return (False,)
+            except IndexError:
+                print("\n     /ERROR/  Paramètre manquant, -mt doit être suivi d'une valeur numérique (combien de processus exécuter? par défaut 1)")
+                NombreThreads = 1
         #Si on arrive ici, params valides
         if mots:
-            return(True,"mots",ValeurTaille,ListeMots,NombreDeMots)
+            return(True,"mots",ValeurTaille,ListeMots,NombreDeMots,multiThread,NombreThreads)
         else:
-            return(True,"nb",ValeurTaille,ValeurCen,NombreDeMots)             
-   
+            return(True,"nb",ValeurTaille,ValeurCen,NombreDeMots, multiThread,NombreThreads)
+        
     #Si parametre invalide    
     else:  
         print("\n     /ERROR/  Paramètre invalide, ('"+sys.argv[idxStranger]+"') n'est pas un argument valide.") 
@@ -114,37 +138,40 @@ def main():
     if rep[0]:
         TailleFenetre = rep[2]
         NombreDeMots = rep[4]
+        multiThread = rep[5]
+        if multiThread:
+            NombreThreads = rep[6]
         #Si entree par mots
         if rep[1] == "mots":
-            ListeDesMots = rep[3]            
+            ListeDesMots = rep[3]
             print("   /PROGRAM/  [Clustering] "+" Taille de la fenetre :",TailleFenetre,"  Liste de mots :",ListeDesMots," Nb de mots à garder :",NombreDeMots)
             Params = (rep[1],TailleFenetre,ListeDesMots,NombreDeMots)
-            Calc = Calculator1(Params,Database)
-            #Calc.test()
-            nbt=1
-            threads=EnsembleThreads1(Calc, nbt)
-            while True:
-                threads.calculer()
             
         #Si entree par nombre
-        else:            
+        else:
             NombreCentroides = rep[3]
             print("   /PROGRAM/  [Clustering] "+" Taille de la fenetre :",TailleFenetre,"  Nb de centroides :",NombreCentroides," Nb de mots à garder :",NombreDeMots)
             Params = (rep[1],TailleFenetre,NombreCentroides,NombreDeMots)
-            Calc = Calculator1(Params,Database)
-            #Calc.test()
-            nbt=2
-            threads=EnsembleThreads1(Calc, nbt)
-            start=time.time()
-            i=0
-            
-            startiter = time.time()
-            timeiter=startiter
-            while threads.calculer():
-                print("itération",i,"en",time.time()-timeiter,"secondes.")
-                i+=1
-                timeiter=time.time()
-            print("temps pour toutes les itérations:", time.time()-start,"secondes")
+        #initialisation de la calculatrice
+        Calc = Calculator1(Params,Database)
+        #multithread
+        if multiThread:
+            startTime = operationsMultiThread(Calc, NombreThreads)
+            print("temps pour toutes les itérations:", time.time()-startTime,"secondes")
+        #singlethread
+        else:
+            Calc.test()
+def operationsMultiThread(Calc, NombreThreads):
+    threads=EnsembleThreads1(Calc, NombreThreads)
+    i=0
+    startTime=time.time()
+    startiter = time.time()
+    timeiter=startiter
+    while threads.calculer():
+        print("itération",i,"en",time.time()-timeiter,"secondes.")
+        i+=1
+        timeiter=time.time()
+    return startTime
 #             
 #EXECUTION DU PROGRAMME =================================================================================================
 if __name__ == '__main__':

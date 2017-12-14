@@ -264,9 +264,9 @@ def calculerDistances(sharedArrayPoints, nombrePoints, sharedArrayCentroides, no
         #print(i)
     for i in range(nombreCentroides):
         dictClusters[i]+=clusters[i]
-        print("thread",indexThread,"cluster",i,":",len(clusters[i]),"points")
-    print()
-    print()
+        #print("thread",indexThread,"cluster",i,":",len(clusters[i]),"points")
+    #print()
+    #print()
     #queuePointsClusters.put(clusters)
 def leastSquare(a,b):
     #c=a-b
@@ -332,12 +332,14 @@ class EnsembleThreads1():
             if not np.array_equal(self.matrCentroides[i], barycentres[i]):
                 aChange = True
             self.matrCentroides[i]=barycentres[i]
+            print("cluster",i+1,":",len(self.dictClusters[i]), "points")
+        
         del self.dictClusters
         self.dictClusters=self.manager.dict()
         for i in range(self.nombreCentroides):
             self.dictClusters[i]=[]
         return aChange
-
+    
 if __name__ == '__main__':
     test1 = {}
     test1[1] = (420,23,23,23)
