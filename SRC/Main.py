@@ -17,7 +17,7 @@ def user_Input(DB):
     #Verifier la presence des arguments ------------------------------------------------------------------
     print("   /PROGRAM/  Vérification des paramètres ")        
     taille = nbCen = mots = nbMots = strangerDanger = False        
-    for argument in sys.argv:
+    for argument in sys.argv[1:]:
         if argument == "-t":
             taille = True
             idxTaille = sys.argv.index(argument)
@@ -41,9 +41,9 @@ def user_Input(DB):
             try:
                 ValeurTaille = int(sys.argv[idxTaille+1])   
                 #Verifier si il a des coocs avec cette fenetre
-                if not DB.verifFenetre(ValeurTaille):
-                    print("\n     /ERROR/  Aucune cooccurrence avec une fenetre de taille ('"+sys.argv[idxTaille+1]+"') présente dans la base de donnée.") 
-                    return (False,)         
+#                 if not DB.verifFenetre(ValeurTaille):
+#                     print("\n     /ERROR/  Aucune cooccurrence avec une fenetre de taille ('"+sys.argv[idxTaille+1]+"') présente dans la base de donnée.") 
+#                     return (False,)         
             #En cas de valeur non-numerique
             except ValueError:
                 print("\n     /ERROR/  Paramètre invalide, ('"+sys.argv[idxTaille+1]+"') n'est pas une valeur numerique.") 
@@ -120,11 +120,11 @@ def main():
             print("   /PROGRAM/  [Clustering] "+" Taille de la fenetre :",TailleFenetre,"  Liste de mots :",ListeDesMots," Nb de mots à garder :",NombreDeMots)
             Params = (rep[1],TailleFenetre,ListeDesMots,NombreDeMots)
             Calc = Calculator1(Params,Database)
-            Calc.test()
-#             nbt=4
-#             threads=EnsembleThreads1(Calc, nbt)
-#             while True:
-#                 threads.calculer()
+            #Calc.test()
+            nbt=1
+            threads=EnsembleThreads1(Calc, nbt)
+            while True:
+                threads.calculer()
             
         #Si entree par nombre
         else:            
@@ -132,7 +132,20 @@ def main():
             print("   /PROGRAM/  [Clustering] "+" Taille de la fenetre :",TailleFenetre,"  Nb de centroides :",NombreCentroides," Nb de mots à garder :",NombreDeMots)
             Params = (rep[1],TailleFenetre,NombreCentroides,NombreDeMots)
             Calc = Calculator1(Params,Database)
+            #Calc.test()
+            nbt=2
+            threads=EnsembleThreads1(Calc, nbt)
+            start=time.time()
+            i=0
             
+            startiter = time.time()
+            timeiter=startiter
+            while threads.calculer():
+                print("itération",i,"en",time.time()-timeiter,"secondes.")
+                i+=1
+                timeiter=time.time()
+            print("temps pour toutes les itérations:", time.time()-start,"secondes")
+#             
 #EXECUTION DU PROGRAMME =================================================================================================
 if __name__ == '__main__':
     sys.exit(main());

@@ -15,40 +15,41 @@ import os
 #CLASSE SQLConnector =====================================================================================================
 class SQLConnector():
     def __init__ (self):
-        #CONNECTION A LA BD --------------------------------------------------------------------
-        print("   /PROGRAM/  Debut connection")
-        startConn = time.time()
-        PATH_ORACLE = 'C:\Oracle\Client\product\12.2.0\client_1\bin'
-        sys.path.append(PATH_ORACLE)    
-        dsn_tns = cx_Oracle.makedsn('delta', 1521, 'decinfo')
-        chaineConnexion = 'e1484242' + '/' + "ZZZzzz111"+ '@' + dsn_tns
-        self.connexion = cx_Oracle.connect(chaineConnexion)
-        self.cur = self.connexion.cursor()
-        endConn = time.time() - startConn        
-        print("     /TIMER/  Connection avec la BD : ",endConn, "secondes") 
-        #DICTIONNAIRE ---------------------------------------------------------------------------
-        self.dictionnaire = {}        
-        print("   /PROGRAM/  Remplir dictionnaire interne")
-        startDict = time.time()
-        self.get_dict()  
-        endDict = time.time() - startDict
-        print("     /TIMER/  Recuperer ",len(self.dictionnaire)," lignes dans la table DICTIONNAIRE : ",endDict, "secondes")   
-        #COOCCURRENCES --------------------------------------------------------------------------
-        #Si fichier cvm n'existe pas, loader Coocs dans la bd est generer CSV
-        if not os.path.isfile('TP3_KevLauChr.csv'):           
-            self.coocs = {}  
-            self.nbcoocs = {}
-            self.tailleFenetre = {}
-            print("   /PROGRAM/  Remplir cooccurrences internes")
-            startCoocs = time.time()
-            self.get_coocs()  
-            endCoocs = time.time() - startCoocs
-            print("     /TIMER/  Recuperer ",len(self.coocs)," lignes dans la table COOCCURRENCES : ",endCoocs, "secondes")  
-            startCSV = time.time()
-            print("   /PROGRAM/  Remplir fichier CSV")
-            self.csvEcriture()
-            endCSV = time.time()-startCSV
-            print("     /TIMER/  Écrire ",len(self.coocs)," lignes dans le fichier TP3_KevLauChr.csv : ",endCSV, "secondes")              
+        print("POOF")
+#         #CONNECTION A LA BD --------------------------------------------------------------------
+#         print("   /PROGRAM/  Debut connection")
+#         startConn = time.time()
+#         PATH_ORACLE = 'C:\Oracle\Client\product\12.2.0\client_1\bin'
+#         sys.path.append(PATH_ORACLE)    
+#         dsn_tns = cx_Oracle.makedsn('delta', 1521, 'decinfo')
+#         chaineConnexion = 'e1484242' + '/' + "ZZZzzz111"+ '@' + dsn_tns
+#         self.connexion = cx_Oracle.connect(chaineConnexion)
+#         self.cur = self.connexion.cursor()
+#         endConn = time.time() - startConn        
+#         print("     /TIMER/  Connection avec la BD : ",endConn, "secondes") 
+#         #DICTIONNAIRE ---------------------------------------------------------------------------
+#         self.dictionnaire = {}        
+#         print("   /PROGRAM/  Remplir dictionnaire interne")
+#         startDict = time.time()
+#         self.get_dict()  
+#         endDict = time.time() - startDict
+#         print("     /TIMER/  Recuperer ",len(self.dictionnaire)," lignes dans la table DICTIONNAIRE : ",endDict, "secondes")   
+#         #COOCCURRENCES --------------------------------------------------------------------------
+#         #Si fichier cvm n'existe pas, loader Coocs dans la bd est generer CSV
+#         if not os.path.isfile('TP3_KevLauChr.csv'):           
+#             self.coocs = {}  
+#             self.nbcoocs = {}
+#             self.tailleFenetre = {}
+#             print("   /PROGRAM/  Remplir cooccurrences internes")
+#             startCoocs = time.time()
+#             self.get_coocs()  
+#             endCoocs = time.time() - startCoocs
+#             print("     /TIMER/  Recuperer ",len(self.coocs)," lignes dans la table COOCCURRENCES : ",endCoocs, "secondes")  
+#             startCSV = time.time()
+#             print("   /PROGRAM/  Remplir fichier CSV")
+#             self.csvEcriture()
+#             endCSV = time.time()-startCSV
+#             print("     /TIMER/  Écrire ",len(self.coocs)," lignes dans le fichier TP3_KevLauChr.csv : ",endCSV, "secondes")              
         
     #RECUPERER LA TABLE DICTIONNAIRE DANS LA BD =================================================== 
     def get_dict(self):
