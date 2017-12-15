@@ -206,23 +206,24 @@ class Calculator1():
        
     def getTopResults(self,cluster,index): 
         distances = []      
-        for mot in cluster:
-            if mot not in self.stoplist:
-                distances.append(leastSquare(self.centroides[index], self.matrice[mot]))
+        for id in cluster:
+            if id not in self.stoplist:
+                distances.append(leastSquare(self.centroides[index], self.matrice[id]))            
                 
-        topIndexes = np.argsort(distances)[::1][:self.nombreDeMotsAGarder*10] #Retourne lesindexes des N distances les plus petites (*10 pour avoir dy headroom)
+        topIndexes = np.argsort(distances)[::1][:int(self.nbPoints/4)] #Retourne lesindexes des distances en ordre croissante
         topMots = []
         topScores = []    
           
         i=0
-        inserted = 0
-        while inserted < self.nombreDeMotsAGarder:
+        inserted = 0       
+        #Tant que l'on a pas attend le nombre de mots a garder, ou le nombre de mot dans le cluster, ou le nombre de distances(indexes) trouves
+        while inserted < self.nombreDeMotsAGarder and inserted < (len(cluster)-1) and i < (len(cluster)-1) and i < (len(topIndexes)):
             index = cluster[topIndexes[i]]         
             if index not in self.stoplist:
                 topMots.append(index)
                 topScores.append(distances[i])
                 inserted += 1             
-            i +=1
+            i +=1       
         return(topMots,topScores) #Retourne les N top indexes et les N top distances
     
     #MAY BE COMPLETELY USELESS
@@ -275,7 +276,7 @@ class Calculator1():
             results = self.getTopResults(self.clusters[c], c)            
             for index in range(len(results[0])):                        
                 mot = self.Database.dictionnaire[results[0][index]]
-                tmp ='{:5}'.format(str(index)+")")  +  '{:24}'.format(" "+mot)+str(results[1][index])            #Don't judge me, I have OCD - Kevin  
+                tmp ='{:5}'.format(str(index+1)+")")  +  '{:24}'.format(" "+mot)+str(results[1][index])            #Don't judge me, I have OCD - Kevin  
                 self.fichier.write(tmp+"\n")
                 print(tmp)                                                                                       #Don't judge me, I have OCD - Kevin  
                                                                                                
@@ -411,9 +412,31 @@ class EnsembleThreads1():
         tmp = "\n"+OCD("=",str(nbChanges)+" CHANGEMENTS")+"\n"
         #self.calculator.fichier.write(tmp+"\n")
         print(tmp) #Don't judge me, I have OCD - Kevin 
-        
-        del self.dictClusters
-        self.dictClusters=self.manager.dict()
-        for i in range(self.nombreCentroides):
-            self.dictClusters[i]=[]
+        if aChange:
+            del self.dictClusters
+            self.dictClusters=self.manager.dict()
+            for i in range(self.nombreCentroides):
+                self.dictClusters[i]=[]
+        else:
+            self.calculator.centroides = self.matrCentroides
+            self.calculator.matrice = self.matrPoints
         return aChange    
+
+
+
+#EXECUTION DU PROGRAMME =================================================================================================
+if __name__ == '__main__':
+
+    a = np.random.randint(34,size=(10,10))
+    
+    c1 = [0,2,4]
+    Coords = np.array([Vecteur for Vecteur in a[[idx for idx in c1]]])
+    print(a)
+    print()
+    print(Coords)
+    print()
+    bary =np.mean(Coords,axis=0)
+    print(len(bary))
+    print(bary)
+    
+    

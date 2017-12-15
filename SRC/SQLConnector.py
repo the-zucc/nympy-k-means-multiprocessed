@@ -17,15 +17,15 @@ class SQLConnector():
     def __init__ (self):        
         #CONNECTION A LA BD --------------------------------------------------------------------
         print("   /PROGRAM/  Debut connection")
-        startConn = time.time()
-        PATH_ORACLE = 'C:\Oracle\Client\product\12.2.0\client_1\bin'
-        sys.path.append(PATH_ORACLE)    
-        dsn_tns = cx_Oracle.makedsn('delta', 1521, 'decinfo')
-        chaineConnexion = 'e1484242' + '/' + "ZZZzzz111"+ '@' + dsn_tns   
-        self.connexion = cx_Oracle.connect(chaineConnexion)
-        self.cur = self.connexion.cursor()
-        endConn = time.time() - startConn        
-        print("     /TIMER/  Connection avec la BD : ",endConn, "secondes") 
+#         startConn = time.time()
+#         PATH_ORACLE = 'C:\Oracle\Client\product\12.2.0\client_1\bin'
+#         sys.path.append(PATH_ORACLE)    
+#         dsn_tns = cx_Oracle.makedsn('delta', 1521, 'decinfo')
+#         chaineConnexion = 'e1484242' + '/' + "ZZZzzz111"+ '@' + dsn_tns   
+#         self.connexion = cx_Oracle.connect(chaineConnexion)
+#         self.cur = self.connexion.cursor()
+#         endConn = time.time() - startConn        
+#         print("     /TIMER/  Connection avec la BD : ",endConn, "secondes") 
         #DICTIONNAIRE ---------------------------------------------------------------------------
         #Si fichier cvm n'existe pas, loader Dict dans la bd
         if not os.path.isfile('TP3_KevLauChr_Dict.csv'):

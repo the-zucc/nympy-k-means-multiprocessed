@@ -176,8 +176,7 @@ def main():
         Calc = Calculator1(Params,Database)
         #multithread
         if multiThread:
-            startTime, threads = operationsMultiThread(Calc, NombreThreads)
-            print("temps pour toutes les itérations:", time.time()-startTime,"secondes")
+            operationsMultiThread(Calc, NombreThreads)
         #singlethread
         else:
             #Debuter clustering -----------------------------------------------------------------------------
@@ -194,8 +193,8 @@ def operationsMultiThread(Calc, NombreThreads):
     startTime=time.time()
     startiter = time.time()
     timeiter=startiter
-    Calc.fichier = open(Calc.filename,"w",encoding="utf-8") #Fix pour un bug
-    tmp = OCD("*","MULTITHREADING : "+str(NombreThreads)+" PROCESSUS")+"\n"
+    Calc.fichier = open(Calc.filename,"a",encoding="utf-8") #Fix pour un bug
+    tmp = OCD("*","MULTITHREADING : "+str(NombreThreads)+" PROCESSUS")+"\n"    
     Calc.fichier.write(tmp+"\n")
     print(tmp)
     
@@ -205,8 +204,36 @@ def operationsMultiThread(Calc, NombreThreads):
         print(tmp)    #D
         i+=1
         timeiter=time.time()
-    return startTime, threads
+        
+    #Une fois fini, grouping
+    tmp =  OCD("*","CLUSTERING : ["+secondsToString(time.time()-startTime)+"]")+"\n\n\n\n\n"
+    Calc.fichier.write(tmp+"\n")     
+    print(tmp)
+    
+    #AFFICHER LES RESULTATS DU GROUPING ==============================================================================
+    tmp = OCD("*","GROUPING DE "+str(Calc.nombreDeMotsAGarder)+" MOTS SUR "+str(Calc.nbCentroides)+" CLUSTERS")
+    Calc.fichier.write(tmp+"\n")
+    print(tmp)
+            
+    debutGrouping = time.time()     
+    for c in range(Calc.nbCentroides):      
+        tmp =  "\n"+OCD("=","GROUPE #"+str(c+1))+"\n"                                                        #Don't judge me, I have OCD - Kevin
+        Calc.fichier.write(tmp+"\n") 
+        print(tmp) 
+        results = Calc.getTopResults(threads.dictClusters[c], c)            
+        for index in range(len(results[0])):                        
+            mot = Calc.Database.dictionnaire[results[0][index]]
+            tmp ='{:5}'.format(str(index+1)+")")  +  '{:24}'.format(" "+mot)+str(results[1][index])            #Don't judge me, I have OCD - Kevin  
+            Calc.fichier.write(tmp+"\n")
+            print(tmp)                                                                                       #Don't judge me, I have OCD - Kevin  
+                                                                                                   
+    tmp = "\n\n"+OCD("*","GROUPING : ["+secondsToString(time.time()-debutGrouping)+"]")+"\n\n"               #Don't judge me, I have OCD - Kevin  
+    Calc.fichier.write(tmp+"\n")
+    Calc.fichier.close()
+    print(tmp) 
+
 #             
 #EXECUTION DU PROGRAMME =================================================================================================
 if __name__ == '__main__':
+    print("NBCORES",multiprocessing.cpu_count())
     sys.exit(main());
