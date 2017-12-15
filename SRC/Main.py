@@ -50,9 +50,9 @@ def user_Input(DB):
             try:
                 ValeurTaille = int(sys.argv[idxTaille+1])   
                 #Verifier si il a des coocs avec cette fenetre
-#                 if not DB.verifFenetre(ValeurTaille):
-#                     print("\n     /ERROR/  Aucune cooccurrence avec une fenetre de taille ('"+sys.argv[idxTaille+1]+"') présente dans la base de donnée.") 
-#                     return (False,)         
+                if not DB.verifFenetre(ValeurTaille):
+                    print("\n     /ERROR/  Aucune cooccurrence avec une fenetre de taille ('"+sys.argv[idxTaille+1]+"') présente dans la base de donnée.") 
+                    return (False,)         
             #En cas de valeur non-numerique
             except ValueError:
                 print("\n     /ERROR/  Paramètre invalide, ('"+sys.argv[idxTaille+1]+"') n'est pas une valeur numerique.") 
@@ -159,14 +159,14 @@ def main():
         #Si entree par mots
         if rep[1] == "mots":
             ListeDesMots = rep[3]
-            print("   /PROGRAM/  [Clustering] "+" Taille de la fenetre :",TailleFenetre,"  Liste de mots :",ListeDesMots)
-            print("   /PROGRAM/  [Clustering] "+" Nb de mots à garder :", NombreDeMots,  " mode d'exécution: multiprocessing ->",multiThread,"nombre de processus:",NombreThreads)
+            print("   /PROGRAM/  [Clustering] "+" Taille de la fenetre :",TailleFenetre,"  Liste de mots :",ListeDesMots," Nb de mots à garder :",NombreDeMots,)
+            print("   /PROGRAM/  [Clustering]  Mode d'exécution: Multiprocessing ->",multiThread,"  Nombre de processus:",NombreThreads)
             Params = (rep[1],TailleFenetre,ListeDesMots,NombreDeMots)
         #Si entree par nombre
         else:
             NombreCentroides = rep[3]
-            print("   /PROGRAM/  [Clustering] "+" Taille de la fenetre :",TailleFenetre,"  Nb de centroides :",NombreCentroides)
-            print("   /PROGRAM/  [Clustering] "+" Nb de mots à garder :",NombreDeMots," mode d'exécution: multiprocessing ->",multiThread,"nombre de processus:",NombreThreads)
+            print("   /PROGRAM/  [Clustering] "+" Taille de la fenetre :",TailleFenetre,"  Nb de centroides :",NombreCentroides," Nb de mots à garder :",NombreDeMots)
+            print("   /PROGRAM/  [Clustering] Mode d'exécution: Multiprocessing ->",multiThread,"  Nombre de processus:",NombreThreads)
             Params = (rep[1],TailleFenetre,NombreCentroides,NombreDeMots)
 
         #initialisation de la calculatrice
@@ -179,7 +179,12 @@ def main():
         else:
             #Debuter clustering -----------------------------------------------------------------------------
             Calc.clustering()
-            
+
+"""
+
+==== MULTITHREAD ========================================================================================================================================================
+
+"""            
 def operationsMultiThread(Calc, NombreThreads):
     threads=EnsembleThreads1(Calc, NombreThreads)
     i=0

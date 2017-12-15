@@ -21,14 +21,14 @@ class SQLConnector():
         PATH_ORACLE = 'C:\Oracle\Client\product\12.2.0\client_1\bin'
         sys.path.append(PATH_ORACLE)    
         dsn_tns = cx_Oracle.makedsn('delta', 1521, 'decinfo')
-        chaineConnexion = 'e1484242' + '/' + "ZZZzzz111"+ '@' + dsn_tns
+        chaineConnexion = 'e1484242' + '/' + "ZZZzzz111"+ '@' + dsn_tns   
         self.connexion = cx_Oracle.connect(chaineConnexion)
         self.cur = self.connexion.cursor()
         endConn = time.time() - startConn        
         print("     /TIMER/  Connection avec la BD : ",endConn, "secondes") 
         #DICTIONNAIRE ---------------------------------------------------------------------------
         #Si fichier cvm n'existe pas, loader Dict dans la bd
-        if not os.path.isfile('TP/_KevLauChr_Dict.csv'):
+        if not os.path.isfile('TP3_KevLauChr_Dict.csv'):
             self.dictionnaire = {}        
             print("   /PROGRAM/  Remplir dictionnaire interne")
             startDict = time.time()
@@ -39,11 +39,11 @@ class SQLConnector():
             print("   /PROGRAM/  Remplir fichier CSV")
             self.ecritureCsvDict()
             endCSV = time.time()-startCSV
-            print("     /TIMER/  Écrire ",len(self.dictionnaire)," lignes dans le fichier TP3_KevLauChr_Dict.csv : ",endCSV, "secondes")              
-        
+            print("     /TIMER/  Écrire ",len(self.dictionnaire)," lignes dans le fichier TP3_KevLauChr_Dict.csv : ",endCSV, "secondes")     
         #Sinon, remplir dictionnaire avec csv
         else:
             print("   /PROGRAM/  CSV Présent, remplir dictionnaire avec fichier CSV")
+            self.dictionnaire = {}
             self.lectureCsvDict()
         
         #COOCCURRENCES --------------------------------------------------------------------------

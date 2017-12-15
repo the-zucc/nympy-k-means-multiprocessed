@@ -86,19 +86,18 @@ class Calculator1():
     def chargerStopList(self):
         #Ouvrir liste ------------------------------------------------------------------------------------
         fichier = "TP3_KevLauChr_StopList.txt"
-        stream = open(fichier,"r", encoding="utf-8")
-       
+        stream = open(fichier,"r", encoding="utf-8")     
         #Split les mots et fermer stream -----------------------------------------------------------------
         liste = stream.read().replace('\ufeff','').split() 
         stream.close()
          
         #Verifier chaque mots du dictionnaire ------------------------------------------------------------
-        for (mot,idx) in self.Database.dictionnaire.items():
+        for (idx,mot) in self.Database.dictionnaire.items():
             #Si mot actuel est dans la stop-liste
             if mot in liste:
                 #Ajouter index du mot a la liste d'indexes (idx -1 puisque les indexes dans la BD commencent a 1)
-                self.stoplist.append(idx)                                  
-    
+                self.stoplist.append(idx)                 
+                       
     def resetClusters(self):   
         #Vider les clusters     
         self.clusters = []
@@ -127,6 +126,10 @@ class Calculator1():
 
     #GENERER DES CENTROIDES AUX MOTS VOULUS ==================================================================================
     def genererCentroidesParMots(self,ListeMots):
+        tmp = OCD("*","INITIATION DE "+str(self.nbCentroides)+" CENTROÏDES SUR LES MOT CHOISIS:")
+        self.fichier.write(tmp+"\n")
+        print(tmp) #Don't judge me, I have OCD - Kevin  
+        
         for Mot in ListeMots:            
             #Recupere mot dans le dictionnaire ---------------------------------------------------------------
             index = self.Database.dictionnaire[Mot]             
@@ -202,13 +205,19 @@ class Calculator1():
             if mot not in self.stoplist:
                 distances.append(leastSquare(self.centroides[index], self.matrice[mot]))
                 
-        topIndexes = np.argsort(distances)[::1][:self.nombreDeMotsAGarder] #Retourne lesindexes des N distances les plus petites
+        topIndexes = np.argsort(distances)[::1][:self.nombreDeMotsAGarder*10] #Retourne lesindexes des N distances les plus petites (*10 pour avoir dy headroom)
         topMots = []
-        topScores = []
-        for index in topIndexes:
+        topScores = []    
+          
+        i=0
+        inserted = 0
+        while inserted < self.nombreDeMotsAGarder:
+            index = cluster[topIndexes[i]]         
             if index not in self.stoplist:
-                topMots.append(cluster[index])
-                topScores.append(distances[index])
+                topMots.append(index)
+                topScores.append(distances[i])
+                inserted += 1             
+            i +=1
         return(topMots,topScores) #Retourne les N top indexes et les N top distances
     
     #MAY BE COMPLETELY USELESS
@@ -219,7 +228,6 @@ class Calculator1():
         self.fichier = open(self.filename,"a",encoding="utf-8")
                  
     def clustering(self):
-        #filename = "TP3_Results_"+str(self.Database.fenetre)+"-Fenetre_"+str(self.nbCentroides)+"-Centroides_"+str(self.nombreDeMotsAGarder)+"-Mots_"+time.ctime(time.time())
         debutCalculs = time.time()
         i = 0 
         calculating = True  
@@ -240,7 +248,7 @@ class Calculator1():
                 self.fichier.write(tmp+"\n")
                 print(tmp)    #Don't judge me, I have OCD - Kevin 
             
-            #Autosave apres chaque 10 iterations    
+            #Autosave apres chaque 10 iterations , semi-utile, just-in-case   
             if i%10 == 0 and i != 0:
                 self.autosave()     
               
@@ -259,7 +267,7 @@ class Calculator1():
             self.fichier.write(tmp+"\n") 
             print(tmp)   
             
-            results = self.getTopResults(self.clusters[c], c)
+            results = self.getTopResults(self.clusters[c], c)            
             for index in range(len(results[0])):                        
                 mot = self.Database.dictionnaire[results[0][index]]
                 tmp ='{:5}'.format(str(index)+")")  +  '{:24}'.format(" "+mot)+str(results[1][index])            #Don't judge me, I have OCD - Kevin  
@@ -275,7 +283,9 @@ class Calculator1():
 
     
 """
-    MULTITHREADING ==============================================================================================================================
+
+==== MULTITHREADING =================================================================================================================================
+
 """                       
 
 def initClusters(nombreCentroides):
