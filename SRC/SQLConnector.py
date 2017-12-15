@@ -65,6 +65,7 @@ class SQLConnector():
         #Sinon, remplir coocs avec csv (plus tard)
         else:
             print("   /PROGRAM/  CSV Présent, remplir coocurrences avec fichier CSV")            
+
         
     #RECUPERER LA TABLE DICTIONNAIRE DANS LA BD =================================================== 
     def get_dict(self):
