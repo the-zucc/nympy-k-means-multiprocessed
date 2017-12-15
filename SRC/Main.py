@@ -185,8 +185,15 @@ def operationsMultiThread(Calc, NombreThreads):
     startTime=time.time()
     startiter = time.time()
     timeiter=startiter
-    while threads.calculer():
-        print("itération",i,"en",time.time()-timeiter,"secondes.")
+    Calc.fichier = open(Calc.filename,"w",encoding="utf-8") #Fix pour un bug
+    tmp = OCD("*","MULTITHREADING : "+str(NombreThreads)+" PROCESSUS")+"\n"
+    Calc.fichier.write(tmp+"\n")
+    print(tmp)
+    
+    while threads.calculer(): 
+        tmp = "\n"+OCD("=","ITÉRATION #"+str(i+1)+" : ["+secondsToString(time.time()-timeiter)+"]")+"\n"        
+        Calc.fichier.write(tmp+"\n")   
+        print(tmp)    #D
         i+=1
         timeiter=time.time()
     return startTime, threads

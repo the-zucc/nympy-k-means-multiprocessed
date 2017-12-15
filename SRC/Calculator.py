@@ -370,6 +370,12 @@ class EnsembleThreads1():
     def calculerBarycentres(self):
         aChange=False
         barycentres=[]
+        nbPtsPerC =[]
+        for x in range(self.nombreCentroides):
+            nbPtsPerC.append(len(self.dictClusters[x]))
+            
+        print("DEBUG: nptsPtsPerc",nbPtsPerC)
+        
         for i in range(self.nombreCentroides):
             barycentre=np.mean(np.array([Vecteur for Vecteur in self.matrPoints[[idx for idx in self.dictClusters[i]]]]),axis=0)
             #Faire la moyenne des points             
@@ -378,7 +384,18 @@ class EnsembleThreads1():
             if not np.array_equal(self.matrCentroides[i], barycentres[i]):
                 aChange = True
             self.matrCentroides[i]=barycentres[i]
-            print("cluster",i+1,":",len(self.dictClusters[i]), "points")
+            tmp = '{:18}'.format(" Le cluster "+str(i+1))+": contient "+str(len(self.dictClusters[i]))+" mots."            
+            self.calculator.fichier.write(tmp+"\n")
+            print(tmp) #Don't judge me, I have OCD - Kevin 
+
+        nbChanges = 0
+        print("DEBUG: LEN MATR",len(self.matrCentroides[0]))
+        for x in range(self.nombreCentroides):
+            nbChanges += np.absolute(len(self.matrCentroides[x]) - nbPtsPerC[x])
+            
+        tmp = "\n"+OCD("=",str(nbChanges)+" CHANGEMENTS")+"\n"
+        #self.calculator.fichier.write(tmp+"\n")
+        print(tmp) #Don't judge me, I have OCD - Kevin 
         
         del self.dictClusters
         self.dictClusters=self.manager.dict()
