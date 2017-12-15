@@ -59,8 +59,8 @@ def user_Input(DB):
                 return (False,)   
         else:         
             print("\n     /ERROR/  Paramètre manquant, ('-t')") 
-            return (False,)   
-                
+            return (False,)
+        
         #Initialisation par nombre de centroides ---------------------------------------------
         if nbCen and not mots: 
             #NbCen
@@ -70,9 +70,8 @@ def user_Input(DB):
             except ValueError:
                 print("\n     /ERROR/  Paramètre invalide, ('"+sys.argv[idxNbCen+1]+"') n'est pas une valeur numerique.") 
                 return (False,)
-        
         #Initialisation par mots -------------------------------------------------------------       
-        elif mots and not nbCen:   
+        elif mots and not nbCen:
             #Liste des mots
             i = idxMots+1
             ListeMots = []
@@ -101,6 +100,9 @@ def user_Input(DB):
             except ValueError:
                 print("\n     /ERROR/  Paramètre invalide, ('"+sys.argv[idxNbMots+1]+"') n'est pas une valeur numerique.") 
                 return (False,)
+        else:
+            print("\n     /ERROR/  Svp, entrer un nombre de mots à afficher avec -nc [nombre]")
+            return (False,)
         if not multiThread and not singleThread:
             print("\n     /ERROR/  Paramètre manquant, -mt ou -st")
             return(False,)
