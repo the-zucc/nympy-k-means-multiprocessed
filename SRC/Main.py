@@ -118,6 +118,7 @@ def user_Input(DB):
                 NombreThreads = int(sys.argv[idxNbThreads+1])
                 if(NombreThreads >= nbProcesseurs):
                     print("\n   /WARNING/  la configuration désirée serait inefficace, reconfiguration automatique.\n")
+                    NombreThreads = nbProcesseurs//2
                     print("   /PROGRAM/  Configuration automatique -- nombre de processeurs:",nbProcesseurs,"nombre de processus à utiliser:",NombreThreads)
             #En cas de valeur non-numerique
             except ValueError:
