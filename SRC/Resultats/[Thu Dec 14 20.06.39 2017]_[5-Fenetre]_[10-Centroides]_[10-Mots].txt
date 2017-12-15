@@ -1,0 +1,771 @@
+*********************** DEBUT : Thu Dec 14 20.06.39 2017 ***********************
+
+******************** INITIATION DE 10 CENTROÏDES ALÉATOIRES ********************
+
+============================== 14836 CHANGEMENTS ===============================
+
+ Le cluster 1     : contient 127 mots.
+ Le cluster 2     : contient 1098 mots.
+ Le cluster 3     : contient 162 mots.
+ Le cluster 4     : contient 99 mots.
+ Le cluster 5     : contient 140 mots.
+ Le cluster 6     : contient 138 mots.
+ Le cluster 7     : contient 4327 mots.
+ Le cluster 8     : contient 59 mots.
+ Le cluster 9     : contient 8255 mots.
+ Le cluster 10    : contient 431 mots.
+
+======================== ITÉRATION #1 : [5.55 SECONDES] ========================
+
+
+=============================== 3954 CHANGEMENTS ===============================
+
+ Le cluster 1     : contient 168 mots.
+ Le cluster 2     : contient 314 mots.
+ Le cluster 3     : contient 638 mots.
+ Le cluster 4     : contient 276 mots.
+ Le cluster 5     : contient 265 mots.
+ Le cluster 6     : contient 809 mots.
+ Le cluster 7     : contient 3302 mots.
+ Le cluster 8     : contient 223 mots.
+ Le cluster 9     : contient 8578 mots.
+ Le cluster 10    : contient 263 mots.
+
+======================== ITÉRATION #2 : [5.47 SECONDES] ========================
+
+
+=============================== 1150 CHANGEMENTS ===============================
+
+ Le cluster 1     : contient 111 mots.
+ Le cluster 2     : contient 107 mots.
+ Le cluster 3     : contient 444 mots.
+ Le cluster 4     : contient 265 mots.
+ Le cluster 5     : contient 252 mots.
+ Le cluster 6     : contient 1014 mots.
+ Le cluster 7     : contient 3244 mots.
+ Le cluster 8     : contient 188 mots.
+ Le cluster 9     : contient 8832 mots.
+ Le cluster 10    : contient 379 mots.
+
+======================== ITÉRATION #3 : [5.5 SECONDES] =========================
+
+
+=============================== 1086 CHANGEMENTS ===============================
+
+ Le cluster 1     : contient 111 mots.
+ Le cluster 2     : contient 50 mots.
+ Le cluster 3     : contient 389 mots.
+ Le cluster 4     : contient 198 mots.
+ Le cluster 5     : contient 186 mots.
+ Le cluster 6     : contient 1142 mots.
+ Le cluster 7     : contient 3082 mots.
+ Le cluster 8     : contient 122 mots.
+ Le cluster 9     : contient 9247 mots.
+ Le cluster 10    : contient 309 mots.
+
+======================== ITÉRATION #4 : [5.47 SECONDES] ========================
+
+
+=============================== 1170 CHANGEMENTS ===============================
+
+ Le cluster 1     : contient 182 mots.
+ Le cluster 2     : contient 34 mots.
+ Le cluster 3     : contient 362 mots.
+ Le cluster 4     : contient 175 mots.
+ Le cluster 5     : contient 133 mots.
+ Le cluster 6     : contient 1103 mots.
+ Le cluster 7     : contient 2810 mots.
+ Le cluster 8     : contient 70 mots.
+ Le cluster 9     : contient 9761 mots.
+ Le cluster 10    : contient 206 mots.
+
+======================== ITÉRATION #5 : [5.55 SECONDES] ========================
+
+
+=============================== 1074 CHANGEMENTS ===============================
+
+ Le cluster 1     : contient 226 mots.
+ Le cluster 2     : contient 27 mots.
+ Le cluster 3     : contient 286 mots.
+ Le cluster 4     : contient 136 mots.
+ Le cluster 5     : contient 119 mots.
+ Le cluster 6     : contient 1135 mots.
+ Le cluster 7     : contient 2501 mots.
+ Le cluster 8     : contient 48 mots.
+ Le cluster 9     : contient 10222 mots.
+ Le cluster 10    : contient 136 mots.
+
+======================== ITÉRATION #6 : [5.5 SECONDES] =========================
+
+
+=============================== 962 CHANGEMENTS ================================
+
+ Le cluster 1     : contient 244 mots.
+ Le cluster 2     : contient 23 mots.
+ Le cluster 3     : contient 214 mots.
+ Le cluster 4     : contient 98 mots.
+ Le cluster 5     : contient 97 mots.
+ Le cluster 6     : contient 1188 mots.
+ Le cluster 7     : contient 2213 mots.
+ Le cluster 8     : contient 36 mots.
+ Le cluster 9     : contient 10632 mots.
+ Le cluster 10    : contient 91 mots.
+
+======================== ITÉRATION #7 : [5.48 SECONDES] ========================
+
+
+=============================== 632 CHANGEMENTS ================================
+
+ Le cluster 1     : contient 223 mots.
+ Le cluster 2     : contient 20 mots.
+ Le cluster 3     : contient 158 mots.
+ Le cluster 4     : contient 78 mots.
+ Le cluster 5     : contient 92 mots.
+ Le cluster 6     : contient 1159 mots.
+ Le cluster 7     : contient 2065 mots.
+ Le cluster 8     : contient 35 mots.
+ Le cluster 9     : contient 10948 mots.
+ Le cluster 10    : contient 58 mots.
+
+======================== ITÉRATION #8 : [5.5 SECONDES] =========================
+
+
+=============================== 434 CHANGEMENTS ================================
+
+ Le cluster 1     : contient 197 mots.
+ Le cluster 2     : contient 16 mots.
+ Le cluster 3     : contient 116 mots.
+ Le cluster 4     : contient 66 mots.
+ Le cluster 5     : contient 83 mots.
+ Le cluster 6     : contient 1053 mots.
+ Le cluster 7     : contient 2100 mots.
+ Le cluster 8     : contient 35 mots.
+ Le cluster 9     : contient 11130 mots.
+ Le cluster 10    : contient 40 mots.
+
+======================== ITÉRATION #9 : [5.55 SECONDES] ========================
+
+
+=============================== 376 CHANGEMENTS ================================
+
+ Le cluster 1     : contient 185 mots.
+ Le cluster 2     : contient 13 mots.
+ Le cluster 3     : contient 74 mots.
+ Le cluster 4     : contient 58 mots.
+ Le cluster 5     : contient 74 mots.
+ Le cluster 6     : contient 947 mots.
+ Le cluster 7     : contient 2184 mots.
+ Le cluster 8     : contient 35 mots.
+ Le cluster 9     : contient 11234 mots.
+ Le cluster 10    : contient 32 mots.
+
+======================= ITÉRATION #10 : [5.51 SECONDES] ========================
+
+
+=============================== 348 CHANGEMENTS ================================
+
+ Le cluster 1     : contient 174 mots.
+ Le cluster 2     : contient 10 mots.
+ Le cluster 3     : contient 56 mots.
+ Le cluster 4     : contient 54 mots.
+ Le cluster 5     : contient 60 mots.
+ Le cluster 6     : contient 825 mots.
+ Le cluster 7     : contient 2263 mots.
+ Le cluster 8     : contient 39 mots.
+ Le cluster 9     : contient 11325 mots.
+ Le cluster 10    : contient 30 mots.
+
+======================= ITÉRATION #11 : [5.48 SECONDES] ========================
+
+
+=============================== 284 CHANGEMENTS ================================
+
+ Le cluster 1     : contient 178 mots.
+ Le cluster 2     : contient 9 mots.
+ Le cluster 3     : contient 44 mots.
+ Le cluster 4     : contient 52 mots.
+ Le cluster 5     : contient 55 mots.
+ Le cluster 6     : contient 707 mots.
+ Le cluster 7     : contient 2283 mots.
+ Le cluster 8     : contient 38 mots.
+ Le cluster 9     : contient 11443 mots.
+ Le cluster 10    : contient 27 mots.
+
+======================== ITÉRATION #12 : [5.5 SECONDES] ========================
+
+
+=============================== 288 CHANGEMENTS ================================
+
+ Le cluster 1     : contient 157 mots.
+ Le cluster 2     : contient 9 mots.
+ Le cluster 3     : contient 39 mots.
+ Le cluster 4     : contient 52 mots.
+ Le cluster 5     : contient 53 mots.
+ Le cluster 6     : contient 660 mots.
+ Le cluster 7     : contient 2223 mots.
+ Le cluster 8     : contient 32 mots.
+ Le cluster 9     : contient 11587 mots.
+ Le cluster 10    : contient 24 mots.
+
+======================= ITÉRATION #13 : [5.53 SECONDES] ========================
+
+
+=============================== 300 CHANGEMENTS ================================
+
+ Le cluster 1     : contient 138 mots.
+ Le cluster 2     : contient 9 mots.
+ Le cluster 3     : contient 35 mots.
+ Le cluster 4     : contient 51 mots.
+ Le cluster 5     : contient 49 mots.
+ Le cluster 6     : contient 632 mots.
+ Le cluster 7     : contient 2135 mots.
+ Le cluster 8     : contient 28 mots.
+ Le cluster 9     : contient 11737 mots.
+ Le cluster 10    : contient 22 mots.
+
+======================= ITÉRATION #14 : [5.53 SECONDES] ========================
+
+
+=============================== 258 CHANGEMENTS ================================
+
+ Le cluster 1     : contient 121 mots.
+ Le cluster 2     : contient 9 mots.
+ Le cluster 3     : contient 33 mots.
+ Le cluster 4     : contient 49 mots.
+ Le cluster 5     : contient 43 mots.
+ Le cluster 6     : contient 577 mots.
+ Le cluster 7     : contient 2091 mots.
+ Le cluster 8     : contient 28 mots.
+ Le cluster 9     : contient 11866 mots.
+ Le cluster 10    : contient 19 mots.
+
+======================= ITÉRATION #15 : [5.55 SECONDES] ========================
+
+
+=============================== 290 CHANGEMENTS ================================
+
+ Le cluster 1     : contient 101 mots.
+ Le cluster 2     : contient 9 mots.
+ Le cluster 3     : contient 33 mots.
+ Le cluster 4     : contient 49 mots.
+ Le cluster 5     : contient 41 mots.
+ Le cluster 6     : contient 516 mots.
+ Le cluster 7     : contient 2032 mots.
+ Le cluster 8     : contient 26 mots.
+ Le cluster 9     : contient 12011 mots.
+ Le cluster 10    : contient 18 mots.
+
+======================= ITÉRATION #16 : [5.55 SECONDES] ========================
+
+
+=============================== 362 CHANGEMENTS ================================
+
+ Le cluster 1     : contient 82 mots.
+ Le cluster 2     : contient 9 mots.
+ Le cluster 3     : contient 33 mots.
+ Le cluster 4     : contient 49 mots.
+ Le cluster 5     : contient 38 mots.
+ Le cluster 6     : contient 477 mots.
+ Le cluster 7     : contient 1914 mots.
+ Le cluster 8     : contient 24 mots.
+ Le cluster 9     : contient 12192 mots.
+ Le cluster 10    : contient 18 mots.
+
+======================= ITÉRATION #17 : [5.58 SECONDES] ========================
+
+
+=============================== 350 CHANGEMENTS ================================
+
+ Le cluster 1     : contient 75 mots.
+ Le cluster 2     : contient 9 mots.
+ Le cluster 3     : contient 32 mots.
+ Le cluster 4     : contient 48 mots.
+ Le cluster 5     : contient 34 mots.
+ Le cluster 6     : contient 429 mots.
+ Le cluster 7     : contient 1803 mots.
+ Le cluster 8     : contient 21 mots.
+ Le cluster 9     : contient 12367 mots.
+ Le cluster 10    : contient 18 mots.
+
+======================== ITÉRATION #18 : [5.5 SECONDES] ========================
+
+
+=============================== 346 CHANGEMENTS ================================
+
+ Le cluster 1     : contient 68 mots.
+ Le cluster 2     : contient 9 mots.
+ Le cluster 3     : contient 32 mots.
+ Le cluster 4     : contient 48 mots.
+ Le cluster 5     : contient 30 mots.
+ Le cluster 6     : contient 379 mots.
+ Le cluster 7     : contient 1693 mots.
+ Le cluster 8     : contient 20 mots.
+ Le cluster 9     : contient 12540 mots.
+ Le cluster 10    : contient 17 mots.
+
+======================= ITÉRATION #19 : [5.56 SECONDES] ========================
+
+
+=============================== 284 CHANGEMENTS ================================
+
+ Le cluster 1     : contient 61 mots.
+ Le cluster 2     : contient 9 mots.
+ Le cluster 3     : contient 32 mots.
+ Le cluster 4     : contient 49 mots.
+ Le cluster 5     : contient 30 mots.
+ Le cluster 6     : contient 345 mots.
+ Le cluster 7     : contient 1595 mots.
+ Le cluster 8     : contient 17 mots.
+ Le cluster 9     : contient 12681 mots.
+ Le cluster 10    : contient 17 mots.
+
+======================= ITÉRATION #20 : [5.56 SECONDES] ========================
+
+
+=============================== 232 CHANGEMENTS ================================
+
+ Le cluster 1     : contient 55 mots.
+ Le cluster 2     : contient 9 mots.
+ Le cluster 3     : contient 31 mots.
+ Le cluster 4     : contient 50 mots.
+ Le cluster 5     : contient 28 mots.
+ Le cluster 6     : contient 310 mots.
+ Le cluster 7     : contient 1523 mots.
+ Le cluster 8     : contient 17 mots.
+ Le cluster 9     : contient 12796 mots.
+ Le cluster 10    : contient 17 mots.
+
+======================= ITÉRATION #21 : [5.55 SECONDES] ========================
+
+
+=============================== 222 CHANGEMENTS ================================
+
+ Le cluster 1     : contient 51 mots.
+ Le cluster 2     : contient 9 mots.
+ Le cluster 3     : contient 31 mots.
+ Le cluster 4     : contient 50 mots.
+ Le cluster 5     : contient 29 mots.
+ Le cluster 6     : contient 284 mots.
+ Le cluster 7     : contient 1443 mots.
+ Le cluster 8     : contient 16 mots.
+ Le cluster 9     : contient 12906 mots.
+ Le cluster 10    : contient 17 mots.
+
+======================= ITÉRATION #22 : [5.58 SECONDES] ========================
+
+
+=============================== 212 CHANGEMENTS ================================
+
+ Le cluster 1     : contient 48 mots.
+ Le cluster 2     : contient 9 mots.
+ Le cluster 3     : contient 29 mots.
+ Le cluster 4     : contient 50 mots.
+ Le cluster 5     : contient 28 mots.
+ Le cluster 6     : contient 268 mots.
+ Le cluster 7     : contient 1360 mots.
+ Le cluster 8     : contient 15 mots.
+ Le cluster 9     : contient 13012 mots.
+ Le cluster 10    : contient 17 mots.
+
+======================= ITÉRATION #23 : [5.51 SECONDES] ========================
+
+
+=============================== 192 CHANGEMENTS ================================
+
+ Le cluster 1     : contient 44 mots.
+ Le cluster 2     : contient 9 mots.
+ Le cluster 3     : contient 27 mots.
+ Le cluster 4     : contient 50 mots.
+ Le cluster 5     : contient 27 mots.
+ Le cluster 6     : contient 254 mots.
+ Le cluster 7     : contient 1285 mots.
+ Le cluster 8     : contient 15 mots.
+ Le cluster 9     : contient 13108 mots.
+ Le cluster 10    : contient 17 mots.
+
+======================= ITÉRATION #24 : [5.56 SECONDES] ========================
+
+
+=============================== 162 CHANGEMENTS ================================
+
+ Le cluster 1     : contient 40 mots.
+ Le cluster 2     : contient 9 mots.
+ Le cluster 3     : contient 27 mots.
+ Le cluster 4     : contient 52 mots.
+ Le cluster 5     : contient 27 mots.
+ Le cluster 6     : contient 232 mots.
+ Le cluster 7     : contient 1230 mots.
+ Le cluster 8     : contient 15 mots.
+ Le cluster 9     : contient 13187 mots.
+ Le cluster 10    : contient 17 mots.
+
+======================= ITÉRATION #25 : [5.59 SECONDES] ========================
+
+
+=============================== 162 CHANGEMENTS ================================
+
+ Le cluster 1     : contient 40 mots.
+ Le cluster 2     : contient 9 mots.
+ Le cluster 3     : contient 27 mots.
+ Le cluster 4     : contient 51 mots.
+ Le cluster 5     : contient 26 mots.
+ Le cluster 6     : contient 224 mots.
+ Le cluster 7     : contient 1159 mots.
+ Le cluster 8     : contient 15 mots.
+ Le cluster 9     : contient 13268 mots.
+ Le cluster 10    : contient 17 mots.
+
+======================= ITÉRATION #26 : [5.55 SECONDES] ========================
+
+
+=============================== 140 CHANGEMENTS ================================
+
+ Le cluster 1     : contient 39 mots.
+ Le cluster 2     : contient 9 mots.
+ Le cluster 3     : contient 27 mots.
+ Le cluster 4     : contient 51 mots.
+ Le cluster 5     : contient 26 mots.
+ Le cluster 6     : contient 219 mots.
+ Le cluster 7     : contient 1095 mots.
+ Le cluster 8     : contient 15 mots.
+ Le cluster 9     : contient 13338 mots.
+ Le cluster 10    : contient 17 mots.
+
+======================= ITÉRATION #27 : [5.53 SECONDES] ========================
+
+
+=============================== 114 CHANGEMENTS ================================
+
+ Le cluster 1     : contient 39 mots.
+ Le cluster 2     : contient 9 mots.
+ Le cluster 3     : contient 27 mots.
+ Le cluster 4     : contient 52 mots.
+ Le cluster 5     : contient 26 mots.
+ Le cluster 6     : contient 211 mots.
+ Le cluster 7     : contient 1046 mots.
+ Le cluster 8     : contient 15 mots.
+ Le cluster 9     : contient 13394 mots.
+ Le cluster 10    : contient 17 mots.
+
+======================= ITÉRATION #28 : [5.58 SECONDES] ========================
+
+
+================================ 74 CHANGEMENTS ================================
+
+ Le cluster 1     : contient 39 mots.
+ Le cluster 2     : contient 9 mots.
+ Le cluster 3     : contient 27 mots.
+ Le cluster 4     : contient 53 mots.
+ Le cluster 5     : contient 26 mots.
+ Le cluster 6     : contient 205 mots.
+ Le cluster 7     : contient 1015 mots.
+ Le cluster 8     : contient 15 mots.
+ Le cluster 9     : contient 13430 mots.
+ Le cluster 10    : contient 17 mots.
+
+======================= ITÉRATION #29 : [5.61 SECONDES] ========================
+
+
+================================ 38 CHANGEMENTS ================================
+
+ Le cluster 1     : contient 39 mots.
+ Le cluster 2     : contient 9 mots.
+ Le cluster 3     : contient 27 mots.
+ Le cluster 4     : contient 53 mots.
+ Le cluster 5     : contient 26 mots.
+ Le cluster 6     : contient 198 mots.
+ Le cluster 7     : contient 1003 mots.
+ Le cluster 8     : contient 15 mots.
+ Le cluster 9     : contient 13449 mots.
+ Le cluster 10    : contient 17 mots.
+
+======================= ITÉRATION #30 : [5.53 SECONDES] ========================
+
+
+================================ 52 CHANGEMENTS ================================
+
+ Le cluster 1     : contient 39 mots.
+ Le cluster 2     : contient 9 mots.
+ Le cluster 3     : contient 27 mots.
+ Le cluster 4     : contient 53 mots.
+ Le cluster 5     : contient 26 mots.
+ Le cluster 6     : contient 194 mots.
+ Le cluster 7     : contient 981 mots.
+ Le cluster 8     : contient 15 mots.
+ Le cluster 9     : contient 13475 mots.
+ Le cluster 10    : contient 17 mots.
+
+======================= ITÉRATION #31 : [5.53 SECONDES] ========================
+
+
+================================ 32 CHANGEMENTS ================================
+
+ Le cluster 1     : contient 39 mots.
+ Le cluster 2     : contient 9 mots.
+ Le cluster 3     : contient 27 mots.
+ Le cluster 4     : contient 53 mots.
+ Le cluster 5     : contient 26 mots.
+ Le cluster 6     : contient 188 mots.
+ Le cluster 7     : contient 971 mots.
+ Le cluster 8     : contient 15 mots.
+ Le cluster 9     : contient 13491 mots.
+ Le cluster 10    : contient 17 mots.
+
+======================= ITÉRATION #32 : [5.55 SECONDES] ========================
+
+
+================================ 20 CHANGEMENTS ================================
+
+ Le cluster 1     : contient 39 mots.
+ Le cluster 2     : contient 9 mots.
+ Le cluster 3     : contient 27 mots.
+ Le cluster 4     : contient 53 mots.
+ Le cluster 5     : contient 26 mots.
+ Le cluster 6     : contient 183 mots.
+ Le cluster 7     : contient 966 mots.
+ Le cluster 8     : contient 15 mots.
+ Le cluster 9     : contient 13501 mots.
+ Le cluster 10    : contient 17 mots.
+
+======================= ITÉRATION #33 : [5.53 SECONDES] ========================
+
+
+================================ 28 CHANGEMENTS ================================
+
+ Le cluster 1     : contient 39 mots.
+ Le cluster 2     : contient 9 mots.
+ Le cluster 3     : contient 27 mots.
+ Le cluster 4     : contient 53 mots.
+ Le cluster 5     : contient 26 mots.
+ Le cluster 6     : contient 180 mots.
+ Le cluster 7     : contient 955 mots.
+ Le cluster 8     : contient 15 mots.
+ Le cluster 9     : contient 13515 mots.
+ Le cluster 10    : contient 17 mots.
+
+======================= ITÉRATION #34 : [5.55 SECONDES] ========================
+
+
+================================ 18 CHANGEMENTS ================================
+
+ Le cluster 1     : contient 39 mots.
+ Le cluster 2     : contient 9 mots.
+ Le cluster 3     : contient 27 mots.
+ Le cluster 4     : contient 53 mots.
+ Le cluster 5     : contient 26 mots.
+ Le cluster 6     : contient 177 mots.
+ Le cluster 7     : contient 949 mots.
+ Le cluster 8     : contient 15 mots.
+ Le cluster 9     : contient 13524 mots.
+ Le cluster 10    : contient 17 mots.
+
+======================= ITÉRATION #35 : [5.55 SECONDES] ========================
+
+
+================================ 6 CHANGEMENTS =================================
+
+ Le cluster 1     : contient 39 mots.
+ Le cluster 2     : contient 9 mots.
+ Le cluster 3     : contient 27 mots.
+ Le cluster 4     : contient 53 mots.
+ Le cluster 5     : contient 26 mots.
+ Le cluster 6     : contient 176 mots.
+ Le cluster 7     : contient 947 mots.
+ Le cluster 8     : contient 15 mots.
+ Le cluster 9     : contient 13527 mots.
+ Le cluster 10    : contient 17 mots.
+
+======================= ITÉRATION #36 : [5.53 SECONDES] ========================
+
+
+================================ 4 CHANGEMENTS =================================
+
+ Le cluster 1     : contient 39 mots.
+ Le cluster 2     : contient 9 mots.
+ Le cluster 3     : contient 27 mots.
+ Le cluster 4     : contient 53 mots.
+ Le cluster 5     : contient 26 mots.
+ Le cluster 6     : contient 176 mots.
+ Le cluster 7     : contient 945 mots.
+ Le cluster 8     : contient 15 mots.
+ Le cluster 9     : contient 13529 mots.
+ Le cluster 10    : contient 17 mots.
+
+======================= ITÉRATION #37 : [5.56 SECONDES] ========================
+
+
+================================ 2 CHANGEMENTS =================================
+
+ Le cluster 1     : contient 39 mots.
+ Le cluster 2     : contient 9 mots.
+ Le cluster 3     : contient 27 mots.
+ Le cluster 4     : contient 53 mots.
+ Le cluster 5     : contient 26 mots.
+ Le cluster 6     : contient 176 mots.
+ Le cluster 7     : contient 944 mots.
+ Le cluster 8     : contient 15 mots.
+ Le cluster 9     : contient 13530 mots.
+ Le cluster 10    : contient 17 mots.
+
+======================= ITÉRATION #38 : [5.56 SECONDES] ========================
+
+
+================================ 2 CHANGEMENTS =================================
+
+ Le cluster 1     : contient 39 mots.
+ Le cluster 2     : contient 9 mots.
+ Le cluster 3     : contient 27 mots.
+ Le cluster 4     : contient 53 mots.
+ Le cluster 5     : contient 26 mots.
+ Le cluster 6     : contient 176 mots.
+ Le cluster 7     : contient 943 mots.
+ Le cluster 8     : contient 15 mots.
+ Le cluster 9     : contient 13531 mots.
+ Le cluster 10    : contient 17 mots.
+
+======================= ITÉRATION #39 : [5.58 SECONDES] ========================
+
+
+================================ 0 CHANGEMENTS =================================
+
+******************* CLUSTERING : [3 MINUTES: 39.96 SECONDES] *******************
+
+
+
+
+
+********************* GROUPING DE 10 MOTS SUR 10 CLUSTERS **********************
+
+================================== GROUPE #1 ===================================
+
+0)    faire                  2279.82840237
+1)    toutes                 2675.85404339
+2)    ouvriers               2726.0591716
+3)    trois                  2790.28994083
+4)    mineurs                2814.67455621
+5)    bras                   2981.72583826
+6)    près                   3039.52071006
+7)    nouveau                3426.41814596
+8)    leurs                  3457.49506903
+9)    enfants                3467.70019724
+
+================================== GROUPE #2 ===================================
+
+0)    et                     270014.333333
+1)    le                     295924.888889
+2)    l                      321110.111111
+3)    les                    325541.555556
+4)    à                      390687.222222
+5)    un                     565439.888889
+6)    il                     831891.111111
+7)    la                     1690863.33333
+8)    de                     2799807.55556
+
+================================== GROUPE #3 ===================================
+
+0)    maison                 434.901234568
+1)    grève                  673.382716049
+2)    main                   881.679012346
+3)    nuit                   1038.19753086
+4)    table                  1043.86419753
+5)    bande                  1241.12345679
+6)    mine                   1245.01234568
+7)    salle                  1285.75308642
+8)    taille                 1348.27160494
+9)    mouquette              1416.27160494
+
+================================== GROUPE #4 ===================================
+
+0)    froid                  521.98754005
+1)    feu                    600.289426842
+2)    sang                   615.100747597
+3)    lit                    634.138483446
+4)    vent                   643.308294767
+5)    petit                  682.063011748
+6)    nez                    682.383766465
+7)    premier                762.742257031
+8)    peuple                 774.270558918
+9)    coeur                  796.346030616
+
+================================== GROUPE #5 ===================================
+
+0)    encore                 3531.67307692
+1)    puis                   4358.75
+2)    bien                   6554.67307692
+3)    dont                   7181.90384615
+4)    dit                    7603.44230769
+5)    où                     8359.36538462
+6)    quand                  8993.44230769
+7)    étienne                9996.36538462
+8)    ça                     10077.8269231
+9)    là                     10192.5192308
+
+================================== GROUPE #6 ===================================
+
+0)    sortir                 372.188759039
+1)    bataille               394.916031767
+2)    besogne                461.836486312
+3)    passait                499.506940857
+4)    dehors                 510.188759039
+5)    tenait                 526.950122676
+6)    mettre                 533.995577221
+7)    famille                541.222849948
+8)    fenêtre                561.143304494
+9)    soupe                  577.256940857
+
+================================== GROUPE #7 ===================================
+
+0)    échappement            48.8501971889
+1)    fraternité             48.9530603914
+2)    ducasse                53.6349267753
+3)    charpente              53.8639829789
+4)    branle                 54.1131876449
+5)    désespérait            54.3167931592
+6)    tremblant              54.924428366
+7)    chagrin                54.9392746014
+8)    visite                 55.2775566799
+9)    crosse                 55.3549691931
+
+================================== GROUPE #8 ===================================
+
+0)    lui                    23023.4044444
+1)    tout                   23110.4044444
+2)    cette                  27343.1377778
+3)    plus                   30510.7377778
+4)    pour                   33641.4044444
+5)    ses                    33854.2711111
+6)    sa                     41143.8044444
+7)    son                    55391.1377778
+8)    du                     58399.0044444
+9)    qui                    64624.6711111
+
+================================== GROUPE #9 ===================================
+
+0)    ébouler                1.05256668405
+1)    pardi                  1.05256668405
+2)    montons                1.05256668405
+3)    solide!                1.05256668405
+4)    regardez!              1.05256668405
+5)    supprimer              1.55969845554
+6)    aristo                 1.65629146419
+7)    étourdir               1.70011675426
+8)    entreprise             1.70011675426
+9)    accabler               1.70011675426
+
+================================== GROUPE #10 ==================================
+
+0)    en                     57222.2595156
+1)    se                     95856.6124567
+2)    elle                   116781.965398
+3)    avait                  126877.67128
+4)    s                      132601.906574
+5)    y                      133916.553633
+6)    on                     144782.553633
+7)    des                    146359.259516
+8)    que                    159093.965398
+9)    n                      177981.67128
+
+
+************************** GROUPING : [0.52 SECONDES] **************************
+
+

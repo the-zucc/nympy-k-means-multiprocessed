@@ -45,16 +45,15 @@ class Calculator1():
         self.nombreDeMotsAGarder = Params[3]        
         self.centroides=[]
         self.clusters=[]       
-        #Initialiser la matrice -------------------------------------------------------------------------
-        self.nbPoints = 14836 #HARDCODED # REMOVE THIS #
+        #Initialiser la matrice (et le dictionnaire au besoin) ------------------------------------------
+        self.nbPoints = len(self.Database.dictionnaire)
         self.matrice = np.zeros( (self.nbPoints,self.nbPoints) )   
-        self.Database.csvLecture(self.matrice,Params[1]) #Remplir matrice avec taille de fenetre     
-        print(self.matrice[2])     
+        self.Database.lectureCsvCoocs(self.matrice,Params[1]) #Remplir matrice avec taille de fenetre  
         print("\n\n"+OCD("*","CLUSTERING SUR "+str(self.nbPoints)+" MOTS")+"\n") #Don't judge me, I have OCD - Kevin  
       
         #Loader la stop-list ----------------------------------------------------------------------------
         self.stoplist = []
-        #self.chargerStopList() # REMOVE THIS #
+        self.chargerStopList()
         
         #Initialiser les centroides par mots -------------------------------------------------------------
         if Params[0] == "mots":
@@ -204,8 +203,9 @@ class Calculator1():
         topMots = []
         topScores = []
         for index in topIndexes:
-            topMots.append(cluster[index])
-            topScores.append(distances[index])
+            if index not in self.stoplist:
+                topMots.append(cluster[index])
+                topScores.append(distances[index])
         return(topMots,topScores) #Retourne les N top indexes et les N top distances
     
     #MAY BE COMPLETELY USELESS
@@ -250,21 +250,20 @@ class Calculator1():
         self.fichier.write(tmp+"\n")
         print(tmp)
         
-        debutGrouping = time.time()
-        maxLength = 40
-        for c in range(self.nbCentroides):   
-            tmp =  "\n"+OCD("=","GROUPE #"+str(c+1))+"\n"                                                       #Don't judge me, I have OCD - Kevin
-            self.fichier.write(tmp+"\n")
+        debutGrouping = time.time()     
+        for c in range(self.nbCentroides):      
+            tmp =  "\n"+OCD("=","GROUPE #"+str(c+1))+"\n"                                                        #Don't judge me, I have OCD - Kevin
+            self.fichier.write(tmp+"\n") 
             print(tmp)   
+            
             results = self.getTopResults(self.clusters[c], c)
-            for r in range(len(results[0])):
-                tmp = '{:25}'.format('{:5}'.format(str(r+1)+") ")+str(results[0][r]))+" : "+str(results[1][r])  #Don't judge me, I have OCD - Kevin
+            for index in range(len(results[0])):                        
+                mot = self.Database.dictionnaire[results[0][index]]
+                tmp ='{:5}'.format(str(index)+")")  +  '{:24}'.format(" "+mot)+str(results[1][index])            #Don't judge me, I have OCD - Kevin  
                 self.fichier.write(tmp+"\n")
-                print(tmp) #Don't judge me, I have OCD - Kevin                 
-#                 for (mot,idx) in self.Database.dictionnaire:
-#                     if idx == results[0][r]:
-#                         print('{:24}'.format(" "+mot+str(pos+1))+str(results[1][r]))                          #Don't judge me, I have OCD - Kevin  
-        tmp = "\n\n"+OCD("*","GROUPING : ["+secondsToString(time.time()-debutGrouping)+"]")+"\n\n"              #Don't judge me, I have OCD - Kevin  
+                print(tmp)                                                                                       #Don't judge me, I have OCD - Kevin  
+                                                                                               
+        tmp = "\n\n"+OCD("*","GROUPING : ["+secondsToString(time.time()-debutGrouping)+"]")+"\n\n"               #Don't judge me, I have OCD - Kevin  
         self.fichier.write(tmp+"\n")
         self.fichier.close()
         print(tmp) 

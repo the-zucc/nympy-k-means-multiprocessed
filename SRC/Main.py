@@ -41,9 +41,9 @@ def user_Input(DB):
             try:
                 ValeurTaille = int(sys.argv[idxTaille+1])   
                 #Verifier si il a des coocs avec cette fenetre
-#                 if not DB.verifFenetre(ValeurTaille):
-#                     print("\n     /ERROR/  Aucune cooccurrence avec une fenetre de taille ('"+sys.argv[idxTaille+1]+"') présente dans la base de donnée.") 
-#                     return (False,)         
+                if not DB.verifFenetre(ValeurTaille):
+                    print("\n     /ERROR/  Aucune cooccurrence avec une fenetre de taille ('"+sys.argv[idxTaille+1]+"') présente dans la base de donnée.") 
+                    return (False,)         
             #En cas de valeur non-numerique
             except ValueError:
                 print("\n     /ERROR/  Paramètre invalide, ('"+sys.argv[idxTaille+1]+"') n'est pas une valeur numerique.") 
