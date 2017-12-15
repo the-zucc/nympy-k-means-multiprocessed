@@ -132,9 +132,13 @@ class Calculator1():
         
         for Mot in ListeMots:            
             #Recupere mot dans le dictionnaire ---------------------------------------------------------------
-            index = self.Database.dictionnaire[Mot]             
+            for (idx,mot) in self.Database.dictionnaire.items():
+                if Mot == mot:
+                    index = idx         
             #Creer le centroide avec le mot dans la matrice --------------------------------------------------          
             self.centroides.append(self.matrice[index])            
+        #Init les clusters a vide
+        self.resetClusters()
 
     def findClosest(self,index):
         #Distances du points i avec tous les centroîdes
@@ -153,11 +157,11 @@ class Calculator1():
         #Garder le nombre de points des clusters précédents   
         nbPointsParClusters = []
         for c in self.clusters:
-            nbPointsParClusters.append(len(c))      
+            nbPointsParClusters.append(len(c))        
             
         #Reset les clusters  
         self.resetClusters()           
-        db = time.time()
+  
         #Passer dans chacun des points
         for index in range(self.nbPoints):
             #Trouve le centroide le plus pret de i et assigner i au bon cluster 
@@ -166,6 +170,7 @@ class Calculator1():
      
         #Compter nombre de changements
         nbChangements = 0      
+     
         for i in range(len(self.clusters)):
             nbChangements += np.absolute(nbPointsParClusters[i] - len(self.clusters[i])) 
         

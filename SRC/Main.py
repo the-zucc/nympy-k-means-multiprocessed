@@ -19,7 +19,8 @@ def user_Input(DB):
     #Verifier la presence des arguments ------------------------------------------------------------------
     print("   /PROGRAM/  Vérification des paramètres ")        
     taille = nbCen = mots = nbMots = strangerDanger = multiThread = singleThread = False
-    NombreThreads=0       
+    NombreThreads=0    
+       
     for argument in sys.argv[1:]:
         if argument == "-t":
             taille = True
@@ -38,6 +39,7 @@ def user_Input(DB):
             idxNbThreads = sys.argv.index(argument)
         elif argument == "-st":
             singleThread = True
+            idxSingle = sys.argv.index(argument)
             NombreThreads=0
         elif "-" in argument:
             strangerDanger = True
@@ -48,6 +50,7 @@ def user_Input(DB):
         #Verifier Taille de fenetre ----------------------------------------------------------
         if taille:
             try:
+                pass
                 ValeurTaille = int(sys.argv[idxTaille+1])   
                 #Verifier si il a des coocs avec cette fenetre
                 if not DB.verifFenetre(ValeurTaille):
@@ -76,10 +79,10 @@ def user_Input(DB):
             i = idxMots+1
             ListeMots = []
             #Tant qu'on a pas atteint le prochain parametre ou la fin des arguments
-            while (i != idxNbMots) and (i != len(sys.argv)):
+            while (i != idxMots) and (i != len(sys.argv)) and "-" not in sys.argv[i]:
                 motTmp = sys.argv[i]
                 #Si mot dans dictionnaire
-                if motTmp in DB.dictionnaire:
+                if motTmp in DB.dictionnaire.values():
                     #Ajouter mot
                     ListeMots.append(sys.argv[i])
                 else:
@@ -101,7 +104,7 @@ def user_Input(DB):
                 print("\n     /ERROR/  Paramètre invalide, ('"+sys.argv[idxNbMots+1]+"') n'est pas une valeur numerique.") 
                 return (False,)
         else:
-            print("\n     /ERROR/  Svp, entrer un nombre de mots à afficher avec -nc [nombre]")
+            print("\n     /ERROR/  Svp, entrer un nombre de mots à afficher avec -n [nombre]")
             return (False,)
         if not multiThread and not singleThread:
             print("\n     /ERROR/  Paramètre manquant, -mt ou -st")
